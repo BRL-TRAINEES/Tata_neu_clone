@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 
-// Define the navigation provider
+
 final navigationProvider = StateNotifierProvider<NavigationNotifier, NavigationState>((ref) {
   return NavigationNotifier();
 });
 
-// State class for navigation
+
 class NavigationState {
   final bool isLogoVisible;
   final int pageIndex;
@@ -17,7 +17,7 @@ class NavigationState {
   });
 }
 
-// StateNotifier class to manage navigation state
+
 class NavigationNotifier extends StateNotifier<NavigationState> {
   NavigationNotifier()
       : super(NavigationState(isLogoVisible: true, pageIndex: 0)) {
@@ -28,21 +28,21 @@ class NavigationNotifier extends StateNotifier<NavigationState> {
   Timer? _logoTimer;
   Timer? _carouselTimer;
 
-  // Timer for showing logo
+  
   void _startLogoTimer() {
     _logoTimer = Timer(const Duration(seconds: 3), () {
-      print('Logo timer finished'); // Debug print to track state change
+      print('Logo timer finished');
       state = NavigationState(isLogoVisible: false, pageIndex: state.pageIndex);
     });
   }
 
-  // Auto slide timer for the carousel
+  
   void _startAutoSlide() {
     _carouselTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      print('Carousel slide to index: ${state.pageIndex}'); // Debug print to track page index
+      print('Carousel slide to index: ${state.pageIndex}');
       state = NavigationState(
-        isLogoVisible: false, // Ensure logo is hidden
-        pageIndex: (state.pageIndex + 1) % 3, // Adjust this to match your number of images
+        isLogoVisible: false, 
+        pageIndex: (state.pageIndex + 1) % 3, 
       );
     });
   }
