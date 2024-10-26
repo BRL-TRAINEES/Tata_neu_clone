@@ -22,10 +22,10 @@ class MainScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final shouldNavigate = ref.watch(navigationProvider);
+    final navigationState = ref.watch(navigationProvider);
 
 
-    if (shouldNavigate==true) {
+    if (!navigationState.isLogoVisible) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const Homescreen()),
@@ -36,7 +36,7 @@ class MainScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Image.network("https://th.bing.com/th/id/OIP.zPrKJRPaoZo6sJYrAsXhCQAAAA?rs=1&pid=ImgDetMain"),
+        child: navigationState.isLogoVisible? Image.network("https://th.bing.com/th/id/OIP.zPrKJRPaoZo6sJYrAsXhCQAAAA?rs=1&pid=ImgDetMain"):Container(),
       ),
     );
   }
