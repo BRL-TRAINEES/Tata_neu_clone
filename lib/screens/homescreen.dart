@@ -51,15 +51,21 @@ class Homescreen extends ConsumerWidget {
     final navigationState = ref.watch(navigationProvider);
 
     final List<String> imagePaths = [
-      "assets/images/medicine.jpg",
-      "assets/images/phone.jpg",
-      "assets/images/sneakers.jpg",
+      "assets/images/moving1.jpg",
+      "assets/images/moving2.jpg",
+      "assets/images/moving3.jpg",
+      "assets/images/moving4.jpg",
+      "assets/images/moving5.jpg",
+      
     ];
 
     return Scaffold(
       body: SingleChildScrollView(
           child: Column(
         children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: 
           Row(
             children: [
               Padding(
@@ -74,6 +80,7 @@ class Homescreen extends ConsumerWidget {
                 ),
               ),
             ],
+          ),
           ),
           const SizedBox(height: 10),
           // Search bar container
@@ -116,15 +123,32 @@ class Homescreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: () => _getCurrentLocation(context),
-            child: const Text('Get Current Location'),
-          ),
-          const SizedBox(height: 10),
+           FutureBuilder(
+              future: Geolocator.getCurrentPosition(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return ElevatedButton(
+                    onPressed: () => _getCurrentLocation(context),
+                    child: const Text('Get Current Location'),
+                  );
+                } else {
+                  final position = snapshot.data;
+                  return Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Text('Current location: ${position?.latitude}, ${position?.longitude}'),
+                    ],
+                  );
+                }
+              },
+              ),
+          
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: SizedBox(
-              height: 300,
+              height: 200,
               child: PageView.builder(
                 itemCount: imagePaths.length,
                 controller: PageController(
@@ -140,7 +164,7 @@ class Homescreen extends ConsumerWidget {
                       child: Image.asset(
                         imagePaths[(navigationState.pageIndex + index) %
                             imagePaths.length],
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                       ),
                     ),
                   );
@@ -148,7 +172,7 @@ class Homescreen extends ConsumerWidget {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -264,7 +288,11 @@ class Homescreen extends ConsumerWidget {
                           ],
                         ),
                         const SizedBox(height: 16),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: 
                         Row(
+
                           children: [
                             Column(
                               children: [
@@ -279,13 +307,13 @@ class Homescreen extends ConsumerWidget {
                             ),
                             const SizedBox(
                                 width:
-                                    20), // Space between Grocery and Medicine
+                                    20), // 
                             Column(
                               children: [
                                 Image.asset(
                                   "assets/images/medicines.jpg",
                                   height: 50,
-                                  width: 0,
+                                  width: 50,
                                 ),
                                 const SizedBox(height: 4),
                                 const Text("Medicine"),
@@ -293,13 +321,14 @@ class Homescreen extends ConsumerWidget {
                             ),
                           ],
                         ),
+                        )
                       ],
                     ),
                   ),
                 ),
 
                 const SizedBox(
-                    width: 16), // Space between Left and Right Containers
+                    width: 16), 
 
                 // Right Container
                 Expanded(
@@ -313,7 +342,7 @@ class Homescreen extends ConsumerWidget {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 2,
                           blurRadius: 5,
-                          offset: const Offset(0, 3), // Shadow position
+                          offset: const Offset(0, 3), 
                         ),
                       ],
                     ),
@@ -324,7 +353,7 @@ class Homescreen extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
                             Text(
-                              "Daily",
+                              "Electronics",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -334,35 +363,39 @@ class Homescreen extends ConsumerWidget {
                           ],
                         ),
                         const SizedBox(height: 16),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: 
                         Row(
                           children: [
                             Column(
                               children: [
                                 Image.asset(
-                                  "assets/images/grocery.jpg",
+                                  "assets/images/mobile.avif",
                                   height: 50,
                                   width: 50,
                                 ),
                                 const SizedBox(height: 4),
-                                const Text("Grocery"),
+                                const Text("Mobile"),
                               ],
                             ),
                             const SizedBox(
                                 width:
-                                    20), // Space between Grocery and Medicine
+                                    20), 
                             Column(
                               children: [
                                 Image.asset(
-                                  "assets/images/medicines.jpg",
+                                  "assets/images/appliances.jpg",
                                   height: 50,
                                   width: 50,
                                 ),
                                 const SizedBox(height: 4),
-                                const Text("Medicine"),
+                                const Text("Appliances"),
                               ],
                             ),
                           ],
                         ),
+                        )
                       ],
                     ),
                   ),
@@ -387,7 +420,7 @@ class Homescreen extends ConsumerWidget {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 2,
                           blurRadius: 5,
-                          offset: const Offset(0, 3), // Shadow position
+                          offset: const Offset(0, 3), 
                         ),
                       ],
                     ),
@@ -398,7 +431,7 @@ class Homescreen extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
                             Text(
-                              "Daily",
+                              "Finance",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -413,26 +446,26 @@ class Homescreen extends ConsumerWidget {
                             Column(
                               children: [
                                 Image.asset(
-                                  "assets/images/grocery.jpg",
+                                  "assets/images/insurance.jpeg",
                                   height: 50,
                                   width: 50,
                                 ),
                                 const SizedBox(height: 4),
-                                const Text("Grocery"),
+                                const Text("Insurance"),
                               ],
                             ),
                             const SizedBox(
                                 width:
-                                    20), // Space between Grocery and Medicine
+                                    20), 
                             Column(
                               children: [
                                 Image.asset(
-                                  "assets/images/medicines.jpg",
+                                  "assets/images/card.png",
                                   height: 50,
-                                  width: 0,
+                                  width: 50,
                                 ),
                                 const SizedBox(height: 4),
-                                const Text("Medicine"),
+                                const Text("Card"),
                               ],
                             ),
                           ],
@@ -442,8 +475,7 @@ class Homescreen extends ConsumerWidget {
                   ),
                 ),
 
-                const SizedBox(
-                    width: 16), // Space between Left and Right Containers
+                const SizedBox(width: 10), 
 
                 // Right Container
                 Expanded(
@@ -457,7 +489,7 @@ class Homescreen extends ConsumerWidget {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 2,
                           blurRadius: 5,
-                          offset: const Offset(0, 3), // Shadow position
+                          offset: const Offset(0, 3), 
                         ),
                       ],
                     ),
@@ -465,9 +497,10 @@ class Homescreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
                             Text(
-                              "Daily",
+                              "Travel",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -482,26 +515,26 @@ class Homescreen extends ConsumerWidget {
                             Column(
                               children: [
                                 Image.asset(
-                                  "assets/images/grocery.jpg",
+                                  "assets/images/hotel.jpeg",
                                   height: 50,
                                   width: 50,
                                 ),
                                 const SizedBox(height: 4),
-                                const Text("Grocery"),
+                                const Text("Hotels"),
                               ],
                             ),
                             const SizedBox(
                                 width:
-                                    20), // Space between Grocery and Medicine
+                                    30), 
                             Column(
                               children: [
                                 Image.asset(
-                                  "assets/images/medicines.jpg",
+                                  "assets/images/flight.webp",
                                   height: 50,
                                   width: 50,
                                 ),
                                 const SizedBox(height: 4),
-                                const Text("Medicine"),
+                                const Text("Flights"),
                               ],
                             ),
                           ],
@@ -514,10 +547,7 @@ class Homescreen extends ConsumerWidget {
             ),
           ),
           SizedBox(height: 16),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            
-         child:  Padding(
+            Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Container(
               padding: const EdgeInsets.all(16.0),
@@ -529,7 +559,7 @@ class Homescreen extends ConsumerWidget {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 2,
                     blurRadius: 5,
-                    offset: const Offset(0, 3), // Shadow position
+                    offset: const Offset(0, 3), 
                   ),
                 ],
               ),
@@ -540,7 +570,7 @@ class Homescreen extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
                             Text(
-                              "Daily",
+                              "Fashion & Lifestyle",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -551,8 +581,10 @@ class Homescreen extends ConsumerWidget {
                           ],
                         ),
                         const SizedBox(height: 16),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
 
-               Row(
+              child:  Row(
                 children: [
                   Column(
                     children: [
@@ -615,13 +647,152 @@ class Homescreen extends ConsumerWidget {
                   ),
                 ],
               ),
+                        )
          ]
           ),
           ),
+          ),
+          SizedBox(height: 10),
+          Divider(
+            thickness: 2,
+          
+          ),
+          SizedBox(height: 30),
+         
+            Text('Unbeaten deals & discounts'),
+          Text('In spotlight',
+          style: TextStyle(fontWeight: FontWeight.bold),),
+          Padding(padding: EdgeInsets.all(10),
+         child:  Image.asset("assets/images/spotlight image 1.png")
+          ),
+          Padding(padding: EdgeInsets.all(10),
+        child:   Container(
+          
+          child:SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+          child:  Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image.asset("assets/images/spotlight image 0.png.jpg",
+              width: 200,),
+              Image.asset("assets/images/spotlight image 2.png.jpg",
+              width: 200),
+              Image.asset("assets/images/spotlight image 3.png.jpg",
+              width: 200),
+              Image.asset("assets/images/spotlight image 4.png.jpg",
+              width: 200),
+              Image.asset("assets/images/spotlight image 5.png.jpg",
+              width: 200),
+              Image.asset("assets/images/spotlight image 6.jpg",
+              width: 200),
+            ],
           )
           )
-          ],
-      )),
-    );
+          )
+          ),
+          SizedBox(height: 16),
+          Divider(),
+          SizedBox(height: 16),
+           Text('Brands you will love'),
+          Text('Featured brands',
+          style: TextStyle(fontWeight: FontWeight.bold),),
+          Padding(padding: EdgeInsets.all(10),
+          child: Container(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+         
+       children: [   Image.asset("assets/images/featured brands 1.jpg",
+              width: 200,),
+          Image.asset("assets/images/featured brands 2.jpg",
+              width: 200,),
+              Image.asset("assets/images/featured brands 3.jpg",
+              width: 200,),
+              Image.asset("assets/images/featured brands 4.jpg",
+              width: 200,),
+              Image.asset("assets/images/featured brands 5.jpg",
+              width: 200,),
+              Image.asset("assets/images/featured brands 6.jpg",
+              width: 200,),
+        ]
+        )
+            )
+          )
+          ),
+          SizedBox(height: 16),
+          Divider(),
+          SizedBox(height: 16),
+           Text('Choose the best luxury brands'),
+          Text('Neu premium corner',
+          style: TextStyle(fontWeight: FontWeight.bold),),
+          Padding(padding: EdgeInsets.all(10),
+        child:   Image.asset("assets/images/premium corner0.jpg",
+             ),),
+          Padding(padding: EdgeInsets.all(10),
+          child: Container(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+         
+       children: [   
+          Image.asset("assets/images/premium corner1.jpg",
+              width: 200,),
+              Image.asset("assets/images/premium corner2.jpg",
+              width: 200,),
+              Image.asset("assets/images/premium corner3.jpg",
+              width: 200,),
+              Image.asset("assets/images/premium corner4.jpg",
+              width: 200,),
+              Image.asset("assets/images/premium corner5.jpg",
+              width: 200,),
+              Image.asset("assets/images/premium corner6.jpg",
+              width: 200,),
+        ]
+        )
+            )
+          )
+          ),
+          SizedBox(height: 16),
+          Divider(),
+          SizedBox(height: 16),
+           Text('Explore further for our hidden gems'),
+          Text('Discover more',
+          style: TextStyle(fontWeight: FontWeight.bold),),
+          Padding(padding: EdgeInsets.all(10),
+          child: Container(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+         
+       children: [   Image.asset("assets/images/discover more 1.jpg",
+              width: 200,),
+          Image.asset("assets/images/discover more 2.jpg",
+              width: 200,),
+              Image.asset("assets/images/discover more 3.jpg",
+              width: 200,),
+              Image.asset("assets/images/discover more 4.jpg",
+              width: 200,),
+              Image.asset("assets/images/discover more 5.jpg",
+              width: 200,),
+              Image.asset("assets/images/discover more 6.jpg",
+              width: 200,),
+              Image.asset("assets/images/discover more 7.jpg",
+              width: 200,),
+              Image.asset("assets/images/discover more 8.jpg",
+              width: 200,),
+        ]
+        )
+            )
+          )
+          )
+
+
+        ]
+          ),
+
+          
+      )
+      );
+    
   }
 }
