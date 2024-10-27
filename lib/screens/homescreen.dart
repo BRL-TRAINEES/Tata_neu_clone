@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tataneu_clone/provider.dart';
-import 'package:geolocator/geolocator.dart'; 
+import 'package:geolocator/geolocator.dart';
+import 'package:tataneu_clone/screens/search_screen.dart';
 
 class Homescreen extends ConsumerWidget {
   const Homescreen({super.key});
-   Future<void> _getCurrentLocation(BuildContext context) async {
+  Future<void> _getCurrentLocation(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
 
-    
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -19,7 +19,6 @@ class Homescreen extends ConsumerWidget {
       return;
     }
 
-    
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -41,7 +40,9 @@ class Homescreen extends ConsumerWidget {
     // Retrieve and display location
     Position position = await Geolocator.getCurrentPosition();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Current location: ${position.latitude}, ${position.longitude}')),
+      SnackBar(
+          content: Text(
+              'Current location: ${position.latitude}, ${position.longitude}')),
     );
   }
 
@@ -76,40 +77,50 @@ class Homescreen extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           // Search bar container
-          Container(
-            padding: const EdgeInsets.all(10),
-            width: 400,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: const Row(
-              children: [
-                Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                  size: 20,
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search Tata Neu',
-                      hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
-                      border: InputBorder.none,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        SearchScreen()), 
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              width: 400,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: const Row(
+                children: [
+                  Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                    size: 20,
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Search Tata Neu',
+                        hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 20),
-           ElevatedButton(
-              onPressed: () => _getCurrentLocation(context),
-              child: const Text('Get Current Location'),
-            ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () => _getCurrentLocation(context),
+            child: const Text('Get Current Location'),
+          ),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: SizedBox(
