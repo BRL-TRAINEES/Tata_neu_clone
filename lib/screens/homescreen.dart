@@ -1,10 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart'; 
 import 'package:tataneu_clone/provider.dart';
 
 class Homescreen extends ConsumerWidget {
   const Homescreen({super.key});
+
+  
+  Future<void> _getCurrentLocation(BuildContext context) async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Location services are disabled.')),
+      );
+      return;
+    }
+
+    
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Location permissions are denied')),
+        );
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Location permissions are permanently denied')),
+      );
+      return;
+    }
+
+    // Retrieve and display location
+    Position position = await Geolocator.getCurrentPosition();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Current location: ${position.latitude}, ${position.longitude}')),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -12,13 +53,13 @@ class Homescreen extends ConsumerWidget {
 
     final List<String> _imagePaths = [
       "assets/images/medicine.jpg",
-
       "assets/images/phone.jpg",
       "assets/images/sneakers.jpg",
     ];
 
     return Scaffold(
       body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         child: Column(
           children: [
             Row(
@@ -66,9 +107,16 @@ class Homescreen extends ConsumerWidget {
                 ],
               ),
             ),
+            const SizedBox(height: 10),
+
+            // Button to get current location
+            ElevatedButton(
+              onPressed: () => _getCurrentLocation(context),
+              child: const Text('Get Current Location'),
+            ),
+
             const SizedBox(height: 20),
-            // geolocator code
-            SizedBox(height: 20),
+            // Carousel Section
             Padding(
               padding: const EdgeInsets.all(16.0), 
               child: Container(
@@ -94,15 +142,12 @@ class Homescreen extends ConsumerWidget {
                   },
                 ),
               ),
-
             ),
             SizedBox(height: 20),
             Row(
-              //scan and pay row
-
-            )
+              // Scan and Pay row placeholder
+            ),
           ],
-          
         ),
       ),
     );
