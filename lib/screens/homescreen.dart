@@ -2,9 +2,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tataneu_clone/provider.dart';
+import 'package:geolocator/geolocator.dart'; 
 
 class Homescreen extends ConsumerWidget {
   const Homescreen({super.key});
+   Future<void> _getCurrentLocation(BuildContext context) async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Location services are disabled.')),
+      );
+      return;
+    }
+
+    
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Location permissions are denied')),
+        );
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Location permissions are permanently denied')),
+      );
+      return;
+    }
+
+    // Retrieve and display location
+    Position position = await Geolocator.getCurrentPosition();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Current location: ${position.latitude}, ${position.longitude}')),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -66,7 +105,10 @@ class Homescreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 20),
-          // geolocator code
+           ElevatedButton(
+              onPressed: () => _getCurrentLocation(context),
+              child: const Text('Get Current Location'),
+            ),
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -232,7 +274,7 @@ class Homescreen extends ConsumerWidget {
                                 Image.asset(
                                   "assets/images/medicines.jpg",
                                   height: 50,
-                                  width: 50,
+                                  width: 0,
                                 ),
                                 const SizedBox(height: 4),
                                 const Text("Medicine"),
