@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Import your medicine provider
-import 'package:tataneu_clone/screens/MedicineItemDetails.dart'; // Import the details page
-
+import 'package:tataneu_clone/screens/MedicineItemDetails.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Medicine items provider
 final medicineItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
@@ -52,8 +49,6 @@ final medicineItemsProvider = Provider<List<Map<String, String>>>((ref) {
     },
   ];
 });
-
-// Search query provider for medicines
 final searchQueryProvider = StateProvider<String>((ref) => "");
 
 class MedicineScreen extends ConsumerWidget {
@@ -64,7 +59,6 @@ class MedicineScreen extends ConsumerWidget {
     final medicineItems = ref.watch(medicineItemsProvider);
     final searchQuery = ref.watch(searchQueryProvider);
 
-    // Filter items based on the search query
     final filteredItems = medicineItems
         .where((item) =>
             item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
@@ -97,7 +91,6 @@ class MedicineScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                // Update the search query in the provider
                 ref.read(searchQueryProvider.notifier).state = query;
               },
             ),
@@ -120,7 +113,6 @@ class MedicineScreen extends ConsumerWidget {
                       title: Text(item["name"]!),
                       subtitle: Text("${item["category"]} - ${item["price"]}"),
                       onTap: () {
-                        // Navigate to the details page on tap
                         Navigator.push(
                           context,
                           MaterialPageRoute(
