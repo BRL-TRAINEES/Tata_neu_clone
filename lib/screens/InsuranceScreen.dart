@@ -106,7 +106,7 @@ class InsuranceScreen extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   return Card(
-                    color: const Color.fromARGB(255, 233, 224, 240),
+                    color: const Color.fromARGB(255, 242, 235, 247),
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     child: ListTile(
                       leading: Image.asset(
