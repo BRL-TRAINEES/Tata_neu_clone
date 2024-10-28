@@ -1,10 +1,14 @@
-// search_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tataneu_clone/provider.dart';
+import 'package:tataneu_clone/provider.dart'; // Provider file with filteredItemsProvider and searchTextProvider
 import 'package:tataneu_clone/ItemsLists/item_data.dart';
 import 'package:tataneu_clone/models/item_model.dart';
-import 'package:tataneu_clone/screens/categoryScreen.dart';
+import 'package:tataneu_clone/screens/ApplianceScreen.dart';
+import 'package:tataneu_clone/screens/GroceryScreen.dart';
+import 'package:tataneu_clone/screens/InsuranceScreen.dart';
+import 'package:tataneu_clone/screens/MedicineScreen.dart';
+import 'package:tataneu_clone/screens/flightsScreen.dart';
+import 'package:tataneu_clone/screens/HotelScreen.dart';
 
 class SearchScreen extends ConsumerWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -47,7 +51,7 @@ class SearchScreen extends ConsumerWidget {
               ),
             ),
           ),
-          Text(
+          const Text(
             'What do you want today?',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
@@ -66,13 +70,43 @@ class SearchScreen extends ConsumerWidget {
                     ),
                     title: Text(item.name),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              categoryScreen(itemName: item.name),
-                        ),
-                      );
+                      if (item.name == 'Grocery') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GroceryScreen()),
+                        );
+                      } else if (item.name == 'Medicine') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MedicineScreen()),
+                        );
+                      } else if (item.name == 'Appliances') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ApplianceScreen()),
+                        );
+                      } else if (item.name == 'Flights') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FlightScreen()),
+                        );
+                      } else if (item.name == 'Hotels') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HotelScreen()),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => InsuranceScreen()),
+                        );
+                      }
                     },
                   ),
                 );
