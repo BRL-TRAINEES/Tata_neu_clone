@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
+import 'package:tataneu_clone/models/item_model.dart';
+import 'package:tataneu_clone/ItemsLists/item_data.dart';
 
-
-final navigationProvider = StateNotifierProvider<NavigationNotifier, NavigationState>((ref) {
+final navigationProvider =
+    StateNotifierProvider<NavigationNotifier, NavigationState>((ref) {
   return NavigationNotifier();
 });
-
 
 class NavigationState {
   final bool isLogoVisible;
@@ -17,7 +18,6 @@ class NavigationState {
   });
 }
 
-
 class NavigationNotifier extends StateNotifier<NavigationState> {
   NavigationNotifier()
       : super(NavigationState(isLogoVisible: true, pageIndex: 0)) {
@@ -28,7 +28,6 @@ class NavigationNotifier extends StateNotifier<NavigationState> {
   Timer? _logoTimer;
   Timer? _carouselTimer;
 
-  
   void _startLogoTimer() {
     _logoTimer = Timer(const Duration(seconds: 3), () {
       print('Logo timer finished');
@@ -36,13 +35,12 @@ class NavigationNotifier extends StateNotifier<NavigationState> {
     });
   }
 
-  
   void _startAutoSlide() {
     _carouselTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
       print('Carousel slide to index: ${state.pageIndex}');
       state = NavigationState(
-        isLogoVisible: false, 
-        pageIndex: (state.pageIndex + 1) % 3, 
+        isLogoVisible: false,
+        pageIndex: (state.pageIndex + 1) % 3,
       );
     });
   }
@@ -54,3 +52,11 @@ class NavigationNotifier extends StateNotifier<NavigationState> {
     super.dispose();
   }
 }
+
+final searchTextProvider = StateProvider<String>((ref) => '');
+final filteredItemsProvider = Provider<List<Item>>((ref) {
+  final searchText = ref.watch(searchTextProvider).toLowerCase();
+  return items
+      .where((item) => item.name.toLowerCase().contains(searchText))
+      .toList();
+});

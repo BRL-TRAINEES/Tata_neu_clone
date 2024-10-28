@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tataneu_clone/provider.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:tataneu_clone/screens/search_screen.dart';
+import 'package:tataneu_clone/SearchScreens/search_screen.dart';
 
 class Homescreen extends ConsumerWidget {
   const Homescreen({super.key});
@@ -81,9 +81,7 @@ class Homescreen extends ConsumerWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        SearchScreen()), 
+                MaterialPageRoute(builder: (context) => SearchScreen()),
               );
             },
             child: Container(
