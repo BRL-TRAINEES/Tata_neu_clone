@@ -110,7 +110,10 @@ class SignupService {
         });
 
         await userCredential.user?.sendEmailVerification();
-        return null; 
+        print("Verification email sent successfully.");
+        return null;
+         
+        
       } else {
         throw Exception('User creation failed');
       }
