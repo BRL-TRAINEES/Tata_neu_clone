@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tataneu_clone/screens/flightsItemDetails.dart';
 
-// Flight items provider
 final flightItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
@@ -57,7 +56,6 @@ final flightItemsProvider = Provider<List<Map<String, String>>>((ref) {
   ];
 });
 
-// Search query provider for flights
 final flightSearchQueryProvider = StateProvider<String>((ref) => "");
 
 class FlightScreen extends ConsumerWidget {
@@ -68,7 +66,6 @@ class FlightScreen extends ConsumerWidget {
     final flightItems = ref.watch(flightItemsProvider);
     final searchQuery = ref.watch(flightSearchQueryProvider);
 
-    // Filter items based on the search query
     final filteredItems = flightItems
         .where((item) =>
             item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
@@ -101,7 +98,6 @@ class FlightScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                // Update the search query in the provider
                 ref.read(flightSearchQueryProvider.notifier).state = query;
               },
             ),
@@ -125,7 +121,6 @@ class FlightScreen extends ConsumerWidget {
                       subtitle: Text(
                           "${item["departure"]} to ${item["destination"]} - ${item["price"]}"),
                       onTap: () {
-                        // Navigate to the details page on tap
                         Navigator.push(
                           context,
                           MaterialPageRoute(
