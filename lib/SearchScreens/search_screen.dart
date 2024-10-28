@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tataneu_clone/provider.dart'; // Provider file with filteredItemsProvider and searchTextProvider
+import 'package:tataneu_clone/provider.dart';
 import 'package:tataneu_clone/ItemsLists/item_data.dart';
 import 'package:tataneu_clone/models/item_model.dart';
 import 'package:tataneu_clone/screens/ApplianceScreen.dart';

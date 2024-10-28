@@ -4,7 +4,6 @@ import 'package:tataneu_clone/screens/HotelItemDetails.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Hotel items provider
 final hotelItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
@@ -52,7 +51,6 @@ final hotelItemsProvider = Provider<List<Map<String, String>>>((ref) {
   ];
 });
 
-// Search query provider for hotels
 final hotelSearchQueryProvider = StateProvider<String>((ref) => "");
 
 class HotelScreen extends ConsumerWidget {
@@ -63,7 +61,6 @@ class HotelScreen extends ConsumerWidget {
     final hotelItems = ref.watch(hotelItemsProvider);
     final searchQuery = ref.watch(hotelSearchQueryProvider);
 
-    // Filter items based on the search query
     final filteredItems = hotelItems
         .where((item) =>
             item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
@@ -96,7 +93,6 @@ class HotelScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                // Update the search query in the provider
                 ref.read(hotelSearchQueryProvider.notifier).state = query;
               },
             ),
@@ -119,7 +115,6 @@ class HotelScreen extends ConsumerWidget {
                       title: Text(item["name"]!),
                       subtitle: Text("${item["location"]} - ${item["price"]}"),
                       onTap: () {
-                        // Navigate to the details page on tap
                         Navigator.push(
                           context,
                           MaterialPageRoute(

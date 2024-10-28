@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tataneu_clone/screens/GroceryItemDetails.dart';
 
-// Grocery items provider
 final groceryItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
@@ -50,7 +49,6 @@ final groceryItemsProvider = Provider<List<Map<String, String>>>((ref) {
   ];
 });
 
-// Search query provider
 final searchQueryProvider = StateProvider<String>((ref) => "");
 
 class GroceryScreen extends ConsumerWidget {
@@ -61,7 +59,6 @@ class GroceryScreen extends ConsumerWidget {
     final groceryItems = ref.watch(groceryItemsProvider);
     final searchQuery = ref.watch(searchQueryProvider);
 
-    // Filter items based on the search query
     final filteredItems = groceryItems
         .where((item) =>
             item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
@@ -81,22 +78,19 @@ class GroceryScreen extends ConsumerWidget {
               decoration: InputDecoration(
                 hintText: 'Search items...',
                 filled: true,
-                fillColor: Colors.grey[200], // Light grey background color
+                fillColor: Colors.grey[200],
                 contentPadding: const EdgeInsets.symmetric(
                     vertical: 12.0, horizontal: 16.0),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(8.0), // Small border radius
-                  borderSide: BorderSide.none, // No border for enabled state
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide.none,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                      8.0), // Same radius for focused state
-                  borderSide: BorderSide.none, // No border for focused state
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide.none,
                 ),
               ),
               onChanged: (query) {
-                // Update the search query in the provider
                 ref.read(searchQueryProvider.notifier).state = query;
               },
             ),
@@ -119,7 +113,6 @@ class GroceryScreen extends ConsumerWidget {
                       title: Text(item["name"]!),
                       subtitle: Text("${item["category"]} - ${item["price"]}"),
                       onTap: () {
-                        // Navigate to the details page on tap
                         Navigator.push(
                           context,
                           MaterialPageRoute(

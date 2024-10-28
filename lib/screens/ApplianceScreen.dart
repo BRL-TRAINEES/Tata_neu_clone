@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Import your appliance provider
+
 import 'package:tataneu_clone/screens/ApplianceItemDetails.dart'; // Import the details page
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Appliance items provider
 final applianceItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
@@ -53,7 +52,6 @@ final applianceItemsProvider = Provider<List<Map<String, String>>>((ref) {
   ];
 });
 
-// Search query provider for appliances
 final applianceSearchQueryProvider = StateProvider<String>((ref) => "");
 
 class ApplianceScreen extends ConsumerWidget {
@@ -64,7 +62,6 @@ class ApplianceScreen extends ConsumerWidget {
     final applianceItems = ref.watch(applianceItemsProvider);
     final searchQuery = ref.watch(applianceSearchQueryProvider);
 
-    // Filter items based on the search query
     final filteredItems = applianceItems
         .where((item) =>
             item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
@@ -97,7 +94,6 @@ class ApplianceScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                // Update the search query in the provider
                 ref.read(applianceSearchQueryProvider.notifier).state = query;
               },
             ),
@@ -120,7 +116,6 @@ class ApplianceScreen extends ConsumerWidget {
                       title: Text(item["name"]!),
                       subtitle: Text("${item["category"]} - ${item["price"]}"),
                       onTap: () {
-                        // Navigate to the details page on tap
                         Navigator.push(
                           context,
                           MaterialPageRoute(

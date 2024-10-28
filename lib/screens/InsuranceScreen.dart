@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tataneu_clone/screens/InsuranceItemDetail.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Insurance items provider
 final insuranceItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
@@ -51,7 +50,6 @@ final insuranceItemsProvider = Provider<List<Map<String, String>>>((ref) {
   ];
 });
 
-// Search query provider for insurances
 final insuranceSearchQueryProvider = StateProvider<String>((ref) => "");
 
 class InsuranceScreen extends ConsumerWidget {
@@ -62,7 +60,6 @@ class InsuranceScreen extends ConsumerWidget {
     final insuranceItems = ref.watch(insuranceItemsProvider);
     final searchQuery = ref.watch(insuranceSearchQueryProvider);
 
-    // Filter items based on the search query
     final filteredItems = insuranceItems
         .where((item) =>
             item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
@@ -95,7 +92,6 @@ class InsuranceScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                // Update the search query in the provider
                 ref.read(insuranceSearchQueryProvider.notifier).state = query;
               },
             ),
@@ -118,7 +114,6 @@ class InsuranceScreen extends ConsumerWidget {
                       title: Text(item["name"]!),
                       subtitle: Text("${item["company"]} - ${item["premium"]}"),
                       onTap: () {
-                        // Navigate to the details page on tap
                         Navigator.push(
                           context,
                           MaterialPageRoute(
