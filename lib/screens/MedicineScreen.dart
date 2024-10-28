@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tataneu_clone/screens/MedicineItemDetails.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 final medicineItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [

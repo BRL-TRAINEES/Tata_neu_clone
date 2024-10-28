@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "467692517017",
+    "project_id": "tata-neu-clone",
+    "storage_bucket": "tata-neu-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467692517017:android:f00db18201c61034f0aa08",
+        "android_client_info": {
+          "package_name": "com.example.tataneu_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjP0Leta0OyA57k22RubpgGyRAh1ukaaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
