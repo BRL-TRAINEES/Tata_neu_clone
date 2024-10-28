@@ -50,7 +50,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             child: Form(
               key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,    
                 children: [
                   Container(
                     decoration: BoxDecoration(

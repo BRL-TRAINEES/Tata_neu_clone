@@ -67,7 +67,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
       Center(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 100,top: 100),
-          child: Column(
+          child: Column(       
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
