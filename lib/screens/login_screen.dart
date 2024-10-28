@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tataneu_clone/main.dart';
 import 'googlesignin.dart';
 
-
 final signInProvider = Provider((ref) => SignInProvider());
 
 class SignInProvider {
@@ -48,19 +47,27 @@ class SignInProvider {
   }
 }
 
-class SigninScreen extends ConsumerWidget {
+class SigninScreen extends ConsumerStatefulWidget {
   const SigninScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-   
+  ConsumerState<SigninScreen> createState() => _SigninScreenState();
+}
+
+class _SigninScreenState extends ConsumerState<SigninScreen> {
+  bool _isPasswordVisible = false;
+
+  @override
+  Widget build(BuildContext context) {
     final signInProviderInstance = ref.read(signInProvider);
 
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
+        child: 
+      Center(
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 100),
-          child: Column(
+          padding: const EdgeInsets.only(bottom: 100,top: 100),
+          child: Column(       
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -103,7 +110,7 @@ class SigninScreen extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Password input
+                    // Password input with eye icon
                     Container(
                       width: 300,
                       child: TextFormField(
@@ -111,11 +118,21 @@ class SigninScreen extends ConsumerWidget {
                         decoration: InputDecoration(
                           labelText: 'Enter Your Password',
                           prefixIcon: const Icon(Icons.password),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
+                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
-                        obscureText: true,
+                        obscureText: !_isPasswordVisible,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your password';
@@ -201,6 +218,7 @@ class SigninScreen extends ConsumerWidget {
           ),
         ),
       ),
+      )
     );
   }
 }
