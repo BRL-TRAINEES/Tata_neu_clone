@@ -56,6 +56,8 @@ class NavigationNotifier extends StateNotifier<NavigationState> {
 final searchTextProvider = StateProvider<String>((ref) => '');
 final filteredItemsProvider = Provider<List<Item>>((ref) {
   final searchText = ref.watch(searchTextProvider).toLowerCase();
+  final items = ref.watch(itemDataProvider);
+
   return items
       .where((item) => item.name.toLowerCase().contains(searchText))
       .toList();
