@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 import 'package:tataneu_clone/models/item_model.dart';
 import 'package:tataneu_clone/ItemsLists/item_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 final navigationProvider =
     StateNotifierProvider<NavigationNotifier, NavigationState>((ref) {
@@ -62,3 +64,64 @@ final filteredItemsProvider = Provider<List<Item>>((ref) {
       .where((item) => item.name.toLowerCase().contains(searchText))
       .toList();
 });
+
+
+
+final resetPasswordProvider = Provider((ref) => ResetPasswordService());
+
+class ResetPasswordService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<String?> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email.trim());
+      return null; // Indicates success
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return 'No user found for this email.';
+      } else {
+        return 'Something went wrong. Please try again.';
+      }
+    }
+  }
+}
+
+final signupProvider = Provider((ref) => SignupService());
+
+class SignupService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<String?> signup(String username, String email, String password) async {
+    try {
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
+      );
+
+      if (userCredential.user != null) {
+        
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set({
+          'username': username,
+          'email': email.trim(),
+        });
+
+        await userCredential.user?.sendEmailVerification();
+        return null; 
+      } else {
+        throw Exception('User creation failed');
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return 'Weak password';
+      } else if (e.code == 'email-already-in-use') {
+        return 'An account exists with this email';
+      } else {
+        return 'Something went wrong. Please try again.';
+      }
+    }
+  }
+}
