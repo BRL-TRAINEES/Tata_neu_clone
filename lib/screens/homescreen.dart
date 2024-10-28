@@ -368,7 +368,257 @@ class Homescreen extends ConsumerWidget {
               ],
             ),
           ),
-        ],
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              children: [
+                // Left Container
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3), // Shadow position
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              "Daily",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Column(
+                              children: [
+                                Image.asset(
+                                  "assets/images/grocery.jpg",
+                                  height: 50,
+                                  width: 50,
+                                ),
+                                const SizedBox(height: 4),
+                                const Text("Grocery"),
+                              ],
+                            ),
+                            const SizedBox(
+                                width:
+                                    20), // Space between Grocery and Medicine
+                            Column(
+                              children: [
+                                Image.asset(
+                                  "assets/images/medicines.jpg",
+                                  height: 50,
+                                  width: 0,
+                                ),
+                                const SizedBox(height: 4),
+                                const Text("Medicine"),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SizedBox(
+                    width: 16), // Space between Left and Right Containers
+
+                // Right Container
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3), // Shadow position
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: const [
+                            Text(
+                              "Daily",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Column(
+                              children: [
+                                Image.asset(
+                                  "assets/images/grocery.jpg",
+                                  height: 50,
+                                  width: 50,
+                                ),
+                                const SizedBox(height: 4),
+                                const Text("Grocery"),
+                              ],
+                            ),
+                            const SizedBox(
+                                width:
+                                    20), // Space between Grocery and Medicine
+                            Column(
+                              children: [
+                                Image.asset(
+                                  "assets/images/medicines.jpg",
+                                  height: 50,
+                                  width: 50,
+                                ),
+                                const SizedBox(height: 4),
+                                const Text("Medicine"),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            
+         child:  Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3), // Shadow position
+                  ),
+                ],
+              ),
+              child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              "Daily",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            
+                            Icon(Icons.arrow_forward),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+
+               Row(
+                children: [
+                  Column(
+                    children: [
+                  Image.asset(
+                    "assets/images/fashion.jpeg",
+                    height: 50,
+                    width: 50,
+                  ),
+                  SizedBox(height: 4),
+                  Text('Fashion'),
+                 ]
+                  ),
+                  SizedBox(width: 20),
+                  Column(
+                    children: [
+                  Image.asset(
+                    "assets/images/footwear.jpeg",
+                    height: 50,
+                    width: 50,
+                  ),
+                  SizedBox(height: 4),
+                  Text('Footwear'),
+                    ]
+                  ),
+                  SizedBox(width: 20),
+                  Column(
+                    children: [
+                  Image.asset(
+                    "assets/images/watches.jpeg",
+                    height: 50,
+                    width: 50,
+                  ),
+                  SizedBox(height: 4),
+                  Text('Watches'),
+                    ]
+                  ),
+                  SizedBox(width: 20),
+                  Column(
+                    children: [
+                  Image.asset(
+                    "assets/images/jewellery.png",
+                    height: 50,
+                    width: 50,
+                  ),
+                  SizedBox(height: 4),
+                  Text('Jewellery'),
+                    ]
+                  ),
+                  SizedBox(width: 20),
+                  Column(
+                    children: [
+                  Image.asset(
+                    "assets/images/eyewear.jpeg",
+                    height: 50,
+                    width: 50,
+                  ),
+                  SizedBox(height: 4),
+                  Text('Eyewear')
+                    ]
+                  ),
+                ],
+              ),
+         ]
+          ),
+          ),
+          )
+          )
+          ],
       )),
     );
   }
