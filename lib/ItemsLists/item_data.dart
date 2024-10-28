@@ -1,4 +1,3 @@
-// item_data.dart
 import 'package:tataneu_clone/models/item_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
