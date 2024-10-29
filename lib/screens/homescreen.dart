@@ -440,7 +440,11 @@ class Homescreen extends ConsumerWidget {
                           Icon(Icons.arrow_forward),
                         ],
                       ),
+                      
                       const SizedBox(height: 16),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: 
                       Row(
                         children: [
                           Column(
@@ -468,6 +472,7 @@ class Homescreen extends ConsumerWidget {
                           ),
                         ],
                       ),
+                      )
                     ],
                   ),
                 ),
@@ -508,6 +513,9 @@ class Homescreen extends ConsumerWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: 
                       Row(
                         children: [
                           Column(
@@ -535,6 +543,7 @@ class Homescreen extends ConsumerWidget {
                           ),
                         ],
                       ),
+                      )
                     ],
                   ),
                 ),
