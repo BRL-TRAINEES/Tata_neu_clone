@@ -65,8 +65,6 @@ final filteredItemsProvider = Provider<List<Item>>((ref) {
       .toList();
 });
 
-
-
 final resetPasswordProvider = Provider((ref) => ResetPasswordService());
 
 class ResetPasswordService {
@@ -100,7 +98,6 @@ class SignupService {
       );
 
       if (userCredential.user != null) {
-        
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user!.uid)
@@ -112,12 +109,12 @@ class SignupService {
         await userCredential.user?.sendEmailVerification();
         print("Verification email sent successfully.");
         return null;
-         
-        
       } else {
         throw Exception('User creation failed');
       }
     } on FirebaseAuthException catch (e) {
+      // print("............................");
+      // print(e.code);
       if (e.code == 'weak-password') {
         return 'Weak password';
       } else if (e.code == 'email-already-in-use') {
