@@ -20,7 +20,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   Future<void> _signup() async {
     if (_formKey.currentState?.validate() ?? false) {
       final signupService = ref.read(signupProvider);
-      
+
       final String? result = await signupService.signup(
         _usernameController.text.trim(),
         _emailController.text.trim(),
@@ -50,7 +50,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             child: Form(
               key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,    
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     decoration: BoxDecoration(
@@ -114,7 +114,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
                         onPressed: () {
                           setState(() {
