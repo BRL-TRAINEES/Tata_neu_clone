@@ -10,7 +10,6 @@ class ResetPasswordScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-   
     Future<void> _resetPassword() async {
       if (_formKey.currentState?.validate() ?? false) {
         final resetPasswordService = ref.read(resetPasswordProvider);
@@ -34,64 +33,105 @@ class ResetPasswordScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Reset Password')),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(200.0),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/pic_reg.jpg'),
-                      fit: BoxFit.cover,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF5B2B91),
+              Color(0xFFC22B8E),
+              Color(0xFFF66C22), 
+            ],
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Tata Neu logo at the center above the input field
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100.0),
+                      image: const DecorationImage(
+                        image: AssetImage('assets/images/tata neu logo.png'),  
+                        fit: BoxFit.cover,
+                      ),
                     ),
+                    height: 150, 
+                    width: 150, 
                   ),
-                  height: 200,
-                  width: 200,
-                ),
-                const SizedBox(height: 20),
-                
-                // Email input field
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Enter your email',
-                    prefixIcon: const Icon(Icons.email),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!value.contains('.') || !value.contains('@')) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                // Reset Password button
-                ElevatedButton(
-                  onPressed: _resetPassword,
-                  child: const Text('Reset Password'),
-                ),
-                
-                // Back to Sign In button
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("Back to Sign In"),
-                ),
-              ],
+                  // Email input field
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Enter your email',
+                      prefixIcon: const Icon(Icons.email),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      if (!value.contains('.') || !value.contains('@')) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Reset Password button with gradient
+                  Container(
+                    width: double.infinity, 
+                    height: 50,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xFF5B2B91), 
+                          Color(0xFFC22B8E),
+                          Color(0xFFF66C22),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent, 
+                        shadowColor: Colors.transparent, 
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      onPressed: _resetPassword,
+                      child: const Text(
+                        'Reset Password',
+                        style: TextStyle(color: Colors.white), 
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Back to Sign In button
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Back to Sign In"),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
