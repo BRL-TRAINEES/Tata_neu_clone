@@ -42,21 +42,32 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign Up')),
-      body: SingleChildScrollView(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF5B2B91), 
+              Color(0xFFC22B8E),
+              Color(0xFFF66C22), 
+            ],
+          ),
+        ),
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  
                   Container(
+                    margin: const EdgeInsets.only(left: 50),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(200.0),
                       image: const DecorationImage(
-                        image: AssetImage('assets/images/pic reg.jpg'),
+                        image: AssetImage('assets/images/tata neu logo.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -106,7 +117,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   ),
                   const SizedBox(height: 16.0),
 
-                  // Password field with eye icon
+                  // Password field 
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
@@ -141,10 +152,29 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   ),
                   const SizedBox(height: 20.0),
 
-                  // Sign Up button
-                  ElevatedButton(
-                    onPressed: _signup,
-                    child: const Text('Sign Up'),
+                  // Sign Up button 
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3, 
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xFF5B2B91), 
+                          Color(0xFFC22B8E),
+                          Color(0xFFF66C22), 
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent, 
+                        shadowColor: Colors.transparent, 
+                      ),
+                      onPressed: _signup,
+                      child: const Text('Sign Up'),
+                    ),
                   ),
                   const SizedBox(height: 20.0),
 
