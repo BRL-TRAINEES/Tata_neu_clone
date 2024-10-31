@@ -113,8 +113,6 @@ class SignupService {
         throw Exception('User creation failed');
       }
     } on FirebaseAuthException catch (e) {
-      // print("............................");
-      // print(e.code);
       if (e.code == 'weak-password') {
         return 'Weak password';
       } else if (e.code == 'email-already-in-use') {
