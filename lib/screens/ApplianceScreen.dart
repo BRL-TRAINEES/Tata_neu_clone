@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:tataneu_clone/screens/ApplianceItemDetails.dart'; // Import the details page
-
-
+import 'package:tataneu_clone/screens/ApplianceItemDetails.dart';
 
 final applianceItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
