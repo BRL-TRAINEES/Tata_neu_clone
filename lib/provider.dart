@@ -55,7 +55,9 @@ class NavigationNotifier extends StateNotifier<NavigationState> {
   }
 }
 
+//searchscreen provider
 final searchTextProvider = StateProvider<String>((ref) => '');
+
 final filteredItemsProvider = Provider<List<Item>>((ref) {
   final searchText = ref.watch(searchTextProvider).toLowerCase();
   final items = ref.watch(itemDataProvider);
