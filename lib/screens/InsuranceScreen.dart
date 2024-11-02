@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tataneu_clone/screens/InsuranceItemDetail.dart';
 
-
 final insuranceItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
