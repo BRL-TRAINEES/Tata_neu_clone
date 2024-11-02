@@ -7,11 +7,16 @@ class ApplianceItemDetail extends StatefulWidget {
   final String image;
 
   const ApplianceItemDetail({
-    Key? key,
+
+    super.key,
+
     required this.name,
     required this.category,
     required this.price,
     required this.image,
+
+  });
+
   }) : super(key: key);
 
   @override

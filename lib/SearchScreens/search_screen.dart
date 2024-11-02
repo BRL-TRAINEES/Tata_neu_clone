@@ -11,7 +11,9 @@ import 'package:tataneu_clone/screens/flightsScreen.dart';
 import 'package:tataneu_clone/screens/HotelScreen.dart';
 
 class SearchScreen extends ConsumerWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+
+  const SearchScreen({super.key});
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
