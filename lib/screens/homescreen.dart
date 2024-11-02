@@ -372,7 +372,7 @@ class Homescreen extends ConsumerWidget {
                               Column(
                                 children: [
                                   Image.asset(
-                                    "assets/images/mobile.avif",
+                                    "assets/images/mobile.png",
                                     height: 50,
                                     width: 50,
                                   ),
