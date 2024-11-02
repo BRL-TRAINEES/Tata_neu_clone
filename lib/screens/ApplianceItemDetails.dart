@@ -7,21 +7,17 @@ class ApplianceItemDetail extends StatefulWidget {
   final String image;
 
   const ApplianceItemDetail({
-
-    super.key,
-
+    Key? key,
     required this.name,
     required this.category,
     required this.price,
     required this.image,
-
-  });
-
   }) : super(key: key);
 
   @override
   _ApplianceItemDetailState createState() => _ApplianceItemDetailState();
 }
+
 
 class _ApplianceItemDetailState extends State<ApplianceItemDetail> {
   final TextEditingController _reviewController = TextEditingController();

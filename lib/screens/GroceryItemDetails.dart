@@ -7,22 +7,17 @@ class GroceryItemDetail extends StatefulWidget {
   final String image;
 
   const GroceryItemDetail({
-
-    super.key,
-
+    Key? key,
     required this.name,
     required this.category,
     required this.price,
     required this.image,
-
-  });
-
-  }) : super(key: key);
-
+  }) : super(key: key); // Correctly passing the key to the superclass
 
   @override
   _GroceryItemDetailState createState() => _GroceryItemDetailState();
 }
+
 
 class _GroceryItemDetailState extends State<GroceryItemDetail> {
   final TextEditingController _reviewController = TextEditingController();
