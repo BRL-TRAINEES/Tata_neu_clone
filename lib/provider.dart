@@ -1,15 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
+import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:tataneu_clone/models/item_model.dart';
 import 'package:tataneu_clone/ItemsLists/item_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Navigation provider
 final navigationProvider =
     StateNotifierProvider<NavigationNotifier, NavigationState>((ref) {
   return NavigationNotifier();
 });
 
+// Navigation state
 class NavigationState {
   final bool isLogoVisible;
   final int pageIndex;
@@ -20,6 +24,7 @@ class NavigationState {
   });
 }
 
+// Navigation notifier with automatic slide functionality
 class NavigationNotifier extends StateNotifier<NavigationState> {
   NavigationNotifier()
       : super(NavigationState(isLogoVisible: true, pageIndex: 0)) {
@@ -28,7 +33,7 @@ class NavigationNotifier extends StateNotifier<NavigationState> {
   }
 
   Timer? _logoTimer;
-  Timer? _carouselTimer;
+  Timer? _autoSlideTimer;
 
   void _startLogoTimer() {
     _logoTimer = Timer(const Duration(seconds: 3), () {
@@ -37,25 +42,48 @@ class NavigationNotifier extends StateNotifier<NavigationState> {
     });
   }
 
+  // Automatic slide between pages
   void _startAutoSlide() {
-    _carouselTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      print('Carousel slide to index: ${state.pageIndex}');
+    _autoSlideTimer = Timer.periodic(Duration(seconds: 5), (timer) {
+      final nextIndex = (state.pageIndex + 1) % 3; // Assuming 3 pages
       state = NavigationState(
-        isLogoVisible: false,
-        pageIndex: (state.pageIndex + 1) % 3,
+        isLogoVisible: state.isLogoVisible,
+        pageIndex: nextIndex,
       );
     });
+  }
+
+  // Set the page index based on user interaction
+  void setPageIndex(int index) {
+    state = NavigationState(isLogoVisible: false, pageIndex: index);
   }
 
   @override
   void dispose() {
     _logoTimer?.cancel();
-    _carouselTimer?.cancel();
+    _autoSlideTimer?.cancel();
     super.dispose();
   }
 }
 
-//searchscreen provider
+// Profile page providers
+final usernameProvider = StateProvider<String>((ref) => '');
+final emailProvider = StateProvider<String>((ref) => '');
+final profileImageProvider = StateProvider<File?>((ref) => null);
+
+final usernameControllerProvider = Provider((ref) {
+  final controller = TextEditingController();
+  ref.onDispose(controller.dispose);
+  return controller;
+});
+
+final emailControllerProvider = Provider((ref) {
+  final controller = TextEditingController();
+  ref.onDispose(controller.dispose);
+  return controller;
+});
+
+// Search screen providers
 final searchTextProvider = StateProvider<String>((ref) => '');
 
 final filteredItemsProvider = Provider<List<Item>>((ref) {
@@ -67,6 +95,7 @@ final filteredItemsProvider = Provider<List<Item>>((ref) {
       .toList();
 });
 
+// Reset password provider
 final resetPasswordProvider = Provider((ref) => ResetPasswordService());
 
 class ResetPasswordService {
@@ -86,6 +115,7 @@ class ResetPasswordService {
   }
 }
 
+// Signup provider
 final signupProvider = Provider((ref) => SignupService());
 
 class SignupService {
