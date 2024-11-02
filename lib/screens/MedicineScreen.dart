@@ -52,7 +52,7 @@ final medicineItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final searchQueryProvider = StateProvider<String>((ref) => "");
 
 class MedicineScreen extends ConsumerWidget {
-  const MedicineScreen({Key? key}) : super(key: key);
+  const MedicineScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

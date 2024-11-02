@@ -52,7 +52,7 @@ final groceryItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final searchQueryProvider = StateProvider<String>((ref) => "");
 
 class GroceryScreen extends ConsumerWidget {
-  const GroceryScreen({Key? key}) : super(key: key);
+  const GroceryScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

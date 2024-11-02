@@ -52,7 +52,7 @@ final applianceItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final applianceSearchQueryProvider = StateProvider<String>((ref) => "");
 
 class ApplianceScreen extends ConsumerWidget {
-  const ApplianceScreen({Key? key}) : super(key: key);
+  const ApplianceScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

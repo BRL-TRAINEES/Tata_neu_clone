@@ -7,12 +7,12 @@ class GroceryItemDetail extends StatefulWidget {
   final String image;
 
   const GroceryItemDetail({
-    Key? key,
+    super.key,
     required this.name,
     required this.category,
     required this.price,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   _GroceryItemDetailState createState() => _GroceryItemDetailState();

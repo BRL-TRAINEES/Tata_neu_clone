@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tataneu_clone/dialog_flow_services.dart';
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -20,7 +22,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _initializeDialogflowService() async {
     try {
-      _dialogflowService = await DialogflowService.fromJson('assets/tataneuappclone2-2887942a596a.json');
+      _dialogflowService = await DialogflowService.fromJson('assets/tataneuappclone2-f3f9cd4e5508.json');
       setState(() {
         _isServiceInitialized = true;
       });

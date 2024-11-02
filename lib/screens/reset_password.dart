@@ -3,14 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tataneu_clone/provider.dart';
 
 class ResetPasswordScreen extends ConsumerWidget {
-  ResetPasswordScreen({Key? key}) : super(key: key);
+  ResetPasswordScreen({super.key});
 
   final TextEditingController _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Future<void> _resetPassword() async {
+    Future<void> resetPassword() async {
       if (_formKey.currentState?.validate() ?? false) {
         final resetPasswordService = ref.read(resetPasswordProvider);
         final message = await resetPasswordService.sendPasswordResetEmail(
@@ -113,7 +113,7 @@ class ResetPasswordScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      onPressed: _resetPassword,
+                      onPressed: resetPassword,
                       child: const Text(
                         'Reset Password',
                         style: TextStyle(color: Colors.white), 

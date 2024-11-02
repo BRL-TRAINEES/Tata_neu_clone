@@ -52,7 +52,7 @@ final insuranceItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final insuranceSearchQueryProvider = StateProvider<String>((ref) => "");
 
 class InsuranceScreen extends ConsumerWidget {
-  const InsuranceScreen({Key? key}) : super(key: key);
+  const InsuranceScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

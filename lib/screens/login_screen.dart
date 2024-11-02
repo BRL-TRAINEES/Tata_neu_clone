@@ -108,7 +108,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                     child: Column(
                       children: [
                         // Email input
-                        Container(
+                        SizedBox(
                           width: 300,
                           child: TextFormField(
                             controller: signInProviderInstance.emailController,
@@ -132,7 +132,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                         ),
                         const SizedBox(height: 20),
                         // Password input 
-                        Container(
+                        SizedBox(
                           width: 300,
                           child: TextFormField(
                             controller: signInProviderInstance.passwordController,

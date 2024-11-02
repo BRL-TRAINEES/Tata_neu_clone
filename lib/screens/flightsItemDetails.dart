@@ -8,13 +8,13 @@ class FlightItemDetail extends StatefulWidget {
   final String image;
 
   const FlightItemDetail({
-    Key? key,
+    super.key,
     required this.name,
     required this.departure,
     required this.destination,
     required this.price,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   _FlightItemDetailState createState() => _FlightItemDetailState();
