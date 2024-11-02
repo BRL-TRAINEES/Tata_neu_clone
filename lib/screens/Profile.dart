@@ -22,6 +22,7 @@ final emailControllerProvider = Provider((ref) {
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final username = ref.watch(usernameProvider);
@@ -34,7 +35,9 @@ class ProfilePage extends ConsumerWidget {
     usernameController.text = username;
     emailController.text = email;
 
+
     Future<void> pickImage() async {
+
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image != null) {
         ref.read(profileImageProvider.notifier).state = File(image.path);
@@ -57,7 +60,9 @@ class ProfilePage extends ConsumerWidget {
             children: [
               SizedBox(height: 20),
               GestureDetector(
+
                 onTap: pickImage,
+
                 child: CircleAvatar(
                   radius: 60,
                   backgroundColor: Color(0xFF001F3F).withOpacity(0.8),

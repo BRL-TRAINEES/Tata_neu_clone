@@ -905,7 +905,9 @@ class Homescreen extends ConsumerWidget {
             context: context,
             isScrollControlled: true, 
             builder: (context) {
+
               return SizedBox(
+
                 height: MediaQuery.of(context).size.height * 0.7,
                 child: ChatScreen(), 
               );

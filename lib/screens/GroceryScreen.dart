@@ -54,6 +54,8 @@ final searchQueryProvider = StateProvider<String>((ref) => "");
 class GroceryScreen extends ConsumerWidget {
   const GroceryScreen({super.key});
 
+  
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final groceryItems = ref.watch(groceryItemsProvider);

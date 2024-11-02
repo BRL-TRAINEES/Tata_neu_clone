@@ -52,7 +52,9 @@ final hotelItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final hotelSearchQueryProvider = StateProvider<String>((ref) => "");
 
 class HotelScreen extends ConsumerWidget {
+
   const HotelScreen({super.key});
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
