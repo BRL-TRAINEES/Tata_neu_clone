@@ -8,6 +8,7 @@ import 'package:tataneu_clone/screens/Profile.dart';
 import 'package:tataneu_clone/screens/bottom%20navigation%20bar%20screens/Neupass.dart';
 import 'package:tataneu_clone/screens/bottom%20navigation%20bar%20screens/categories.dart';
 import 'package:tataneu_clone/screens/bottom%20navigation%20bar%20screens/offers.dart';
+import 'package:tataneu_clone/screens/chat_screen.dart';
 
 class Homescreen extends ConsumerWidget {
   const Homescreen({super.key});
@@ -49,6 +50,8 @@ class Homescreen extends ConsumerWidget {
               'Current location: ${position.latitude}, ${position.longitude}')),
     );
   }
+
+              
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -895,6 +898,21 @@ class Homescreen extends ConsumerWidget {
             label: '',
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true, 
+            builder: (context) {
+              return Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: ChatScreen(), 
+              );
+            },
+          );
+        },
+        child: Icon(Icons.chat),
       ),
     );
   }

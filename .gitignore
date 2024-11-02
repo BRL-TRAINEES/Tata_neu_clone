@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+assets/tataneuappclone2-2887942a596a.json
 
 # IntelliJ related
 *.iml
