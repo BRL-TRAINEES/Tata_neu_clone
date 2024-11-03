@@ -7,12 +7,12 @@ class JewelryItemDetail extends StatefulWidget {
   final String image;
 
   const JewelryItemDetail({
-    Key? key,
+    super.key,
     required this.name,
     required this.category,
     required this.price,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   _JewelryItemDetailState createState() => _JewelryItemDetailState();

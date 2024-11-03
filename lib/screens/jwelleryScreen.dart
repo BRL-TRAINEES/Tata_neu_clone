@@ -52,7 +52,7 @@ final jewelryItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final searchQueryProvider = StateProvider<String>((ref) => "");
 
 class JewelryScreen extends ConsumerWidget {
-  const JewelryScreen({Key? key}) : super(key: key);
+  const JewelryScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

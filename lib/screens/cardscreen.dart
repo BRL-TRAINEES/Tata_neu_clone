@@ -52,7 +52,7 @@ final cardItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final cardSearchQueryProvider = StateProvider<String>((ref) => "");
 
 class CardScreen extends ConsumerWidget {
-  const CardScreen({Key? key}) : super(key: key);
+  const CardScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

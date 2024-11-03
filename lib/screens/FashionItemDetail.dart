@@ -7,12 +7,12 @@ class FashionItemDetail extends StatefulWidget {
   final String image;
 
   const FashionItemDetail({
-    Key? key,
+    super.key,
     required this.name,
     required this.category,
     required this.price,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   _FashionItemDetailState createState() => _FashionItemDetailState();

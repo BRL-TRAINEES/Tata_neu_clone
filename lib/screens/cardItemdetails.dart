@@ -7,12 +7,12 @@ class CardItemDetail extends StatefulWidget {
   final String image;
 
   const CardItemDetail({
-    Key? key,
+    super.key,
     required this.type,
     required this.category,
     required this.price,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   _CardItemDetailState createState() => _CardItemDetailState();
