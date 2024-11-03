@@ -1,85 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tataneu_clone/screens/InsuranceItemDetail.dart';
+import 'package:tataneu_clone/screens/MobileItemdetails.dart';
 
-final insuranceItemsProvider = Provider<List<Map<String, String>>>((ref) {
+final mobileItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
-      "name": "Health Insurance",
-      "company": "HealthCare Inc.",
-      "premium": "\$300.00",
-      "image": "assets/images/ins1.png",
+      "model": "iPhone 14 Pro",
+      "brand": "Apple",
+      "price": "\$999.00",
+      "image": "assets/images/iphone14.png",
     },
     {
-      "name": "Car Insurance",
-      "company": "AutoProtect",
-      "premium": "\$120.00",
-      "image": "assets/images/ins2.png",
+      "model": "Galaxy S22 Ultra",
+      "brand": "Samsung",
+      "price": "\$1199.00",
+      "image": "assets/images/samsungS22.png",
     },
     {
-      "name": "Home Insurance",
-      "company": "SecureHome",
-      "premium": "\$250.00",
-      "image": "assets/images/ins3.png",
+      "model": "Pixel 7 Pro",
+      "brand": "Google",
+      "price": "\$899.00",
+      "image": "assets/images/pixel7.png",
     },
     {
-      "name": "Travel Insurance",
-      "company": "TravelSafe",
-      "premium": "\$75.00",
-      "image": "assets/images/ins4.png",
+      "model": "OnePlus 11",
+      "brand": "OnePlus",
+      "price": "\$699.00",
+      "image": "assets/images/oneplus.png",
     },
     {
-      "name": "Life Insurance",
-      "company": "LifeGuard",
-      "premium": "\$400.00",
-      "image": "assets/images/ins5.png",
+      "model": "Xperia 1 IV",
+      "brand": "Sony",
+      "price": "\$1299.00",
+      "image": "assets/images/xperia.png",
     },
     {
-      "name": "Business Insurance",
-      "company": "BizSecure",
-      "premium": "\$500.00",
-      "image": "assets/images/ins6.png",
+      "model": "Xiaomi 12 Pro",
+      "brand": "Xiaomi",
+      "price": "\$799.00",
+      "image": "assets/images/xiaomi.png",
     },
     {
-      "name": "Pet Insurance",
-      "company": "PawProtect",
-      "premium": "\$60.00",
-      "image": "assets/images/ins7.png",
+      "model": "Moto Edge Plus",
+      "brand": "Motorola",
+      "price": "\$799.00",
+      "image": "assets/images/moto.png",
     },
   ];
 });
 
-final insuranceSearchQueryProvider = StateProvider<String>((ref) => "");
+final mobileSearchQueryProvider = StateProvider<String>((ref) => "");
 
-class InsuranceScreen extends ConsumerWidget {
-
-  const InsuranceScreen({super.key});
+class MobileScreen extends ConsumerWidget {
+  const MobileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final insuranceItems = ref.watch(insuranceItemsProvider);
-    final searchQuery = ref.watch(insuranceSearchQueryProvider);
+    final mobileItems = ref.watch(mobileItemsProvider);
+    final searchQuery = ref.watch(mobileSearchQueryProvider);
 
-    final filteredItems = insuranceItems
+    // Filter mobile items based on the search query
+    final filteredItems = mobileItems
         .where((item) =>
-            item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
+            item["model"]!.toLowerCase().contains(searchQuery.toLowerCase()))
         .toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Insurance Options',
-            style: TextStyle(color: Colors.black)),
+        title:
+            const Text('Mobile Store', style: TextStyle(color: Colors.black)),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            // Search text field
             TextField(
               decoration: InputDecoration(
-                hintText: 'Search insurances...',
+                hintText: 'Search mobile...',
                 filled: true,
                 fillColor: Colors.grey[200],
                 contentPadding: const EdgeInsets.symmetric(
@@ -94,32 +95,32 @@ class InsuranceScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                ref.read(insuranceSearchQueryProvider.notifier).state = query;
+                ref.read(mobileSearchQueryProvider.notifier).state = query;
               },
             ),
             const SizedBox(height: 20),
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Number of items per row
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 10.0,
-                  childAspectRatio: 0.7, // Adjust aspect ratio as needed
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.75,
+                  crossAxisSpacing: 16.0,
+                  mainAxisSpacing: 16.0,
                 ),
                 itemCount: filteredItems.length,
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   return Card(
-                    color: const Color.fromARGB(255, 242, 235, 247),
+                    color: const Color.fromARGB(255, 229, 231, 233),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => InsuranceItemDetail(
-                              name: item["name"]!,
-                              company: item["company"]!,
-                              premium: item["premium"]!,
+                            builder: (context) => MobileItemDetail(
+                              model: item["model"]!,
+                              brand: item["brand"]!,
+                              price: item["price"]!,
                               image: item["image"]!,
                             ),
                           ),
@@ -130,18 +131,16 @@ class InsuranceScreen extends ConsumerWidget {
                         children: [
                           Image.asset(
                             item["image"]!,
-                            width: 80,
-                            height: 80,
+                            width: 100,
+                            height: 100,
                             fit: BoxFit.cover,
                           ),
                           const SizedBox(height: 8),
-                          Text(item["name"]!,
+                          Text(item["model"]!,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
-                          Text(
-                            "${item["company"]} - ${item["premium"]}",
-                            textAlign: TextAlign.center,
-                          ),
+                          Text(item["brand"]!),
+                          Text(item["price"]!),
                         ],
                       ),
                     ),

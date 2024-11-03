@@ -4,10 +4,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tataneu_clone/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:tataneu_clone/SearchScreens/search_screen.dart';
+import 'package:tataneu_clone/screens/EyewearScreen.dart';
+import 'package:tataneu_clone/screens/FashionScreen.dart';
+import 'package:tataneu_clone/screens/FootwearScreen.dart';
+import 'package:tataneu_clone/screens/GroceryScreen.dart';
+import 'package:tataneu_clone/screens/HotelScreen.dart';
+import 'package:tataneu_clone/screens/InsuranceScreen.dart';
+import 'package:tataneu_clone/screens/MedicineScreen.dart';
+import 'package:tataneu_clone/screens/MobileScreen.dart';
 import 'package:tataneu_clone/screens/Profile.dart';
 import 'package:tataneu_clone/screens/bottom%20navigation%20bar%20screens/Neupass.dart';
 import 'package:tataneu_clone/screens/bottom%20navigation%20bar%20screens/categories.dart';
 import 'package:tataneu_clone/screens/bottom%20navigation%20bar%20screens/offers.dart';
+import 'package:tataneu_clone/screens/cardscreen.dart';
+import 'package:tataneu_clone/screens/flightsScreen.dart';
+import 'package:tataneu_clone/screens/ApplianceScreen.dart';
+import 'package:tataneu_clone/screens/jwelleryScreen.dart';
+import 'package:tataneu_clone/screens/watchesScreen.dart';
 import 'package:tataneu_clone/screens/chat_screen.dart';
 
 class Homescreen extends ConsumerWidget {
@@ -51,8 +64,6 @@ class Homescreen extends ConsumerWidget {
     );
   }
 
-              
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final navigationState = ref.watch(navigationProvider);
@@ -66,6 +77,7 @@ class Homescreen extends ConsumerWidget {
     ];
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(children: [
           SingleChildScrollView(
@@ -86,9 +98,17 @@ class Homescreen extends ConsumerWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, top: 20),
-                  child: Image.asset(
-                    "assets/images/finance.jpg",
-                    width: 100,
+                  child: GestureDetector(
+                    child: Image.asset(
+                      "assets/images/finance.jpg",
+                      width: 100,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CardScreen()),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -297,31 +317,51 @@ class Homescreen extends ConsumerWidget {
                             Icon(Icons.arrow_forward),
                           ],
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 10),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
                               Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/grocery.jpg",
-                                    height: 50,
-                                    width: 50,
+                                  GestureDetector(
+                                    child: Image.asset(
+                                      "assets/images/grocery.jpg",
+                                      height: 60,
+                                      width: 60,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                GroceryScreen()),
+                                      );
+                                    },
                                   ),
-                                  const SizedBox(height: 4),
+                                  const SizedBox(height: 2),
                                   const Text("Grocery"),
                                 ],
                               ),
                               const SizedBox(width: 20), //
                               Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/medicines.jpg",
-                                    height: 50,
-                                    width: 50,
+                                  GestureDetector(
+                                    child: Image.asset(
+                                      "assets/images/medicines.jpg",
+                                      height: 60,
+                                      width: 60,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                MedicineScreen()),
+                                      );
+                                    },
                                   ),
-                                  const SizedBox(height: 4),
+                                  const SizedBox(height: 2),
                                   const Text("Medicine"),
                                 ],
                               ),
@@ -374,10 +414,20 @@ class Homescreen extends ConsumerWidget {
                             children: [
                               Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/mobile.png",
-                                    height: 50,
-                                    width: 50,
+                                  GestureDetector(
+                                    child: Image.asset(
+                                      "assets/images/mobile.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                MobileScreen()),
+                                      );
+                                    },
                                   ),
                                   const SizedBox(height: 4),
                                   const Text("Mobile"),
@@ -386,10 +436,20 @@ class Homescreen extends ConsumerWidget {
                               const SizedBox(width: 20),
                               Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/appliances.jpg",
-                                    height: 50,
-                                    width: 50,
+                                  GestureDetector(
+                                    child: Image.asset(
+                                      "assets/images/appliances.jpg",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ApplianceScreen()),
+                                      );
+                                    },
                                   ),
                                   const SizedBox(height: 4),
                                   const Text("Appliances"),
@@ -449,10 +509,20 @@ class Homescreen extends ConsumerWidget {
                             children: [
                               Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/insurance.jpeg",
-                                    height: 50,
-                                    width: 50,
+                                  GestureDetector(
+                                    child: Image.asset(
+                                      "assets/images/insurance.jpeg",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                InsuranceScreen()),
+                                      );
+                                    },
                                   ),
                                   const SizedBox(height: 4),
                                   const Text("Insurance"),
@@ -461,10 +531,19 @@ class Homescreen extends ConsumerWidget {
                               const SizedBox(width: 20),
                               Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/card.png",
-                                    height: 50,
-                                    width: 50,
+                                  GestureDetector(
+                                    child: Image.asset(
+                                      "assets/images/card.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => CardScreen()),
+                                      );
+                                    },
                                   ),
                                   const SizedBox(height: 4),
                                   const Text("Card"),
@@ -519,10 +598,20 @@ class Homescreen extends ConsumerWidget {
                             children: [
                               Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/hotel.jpeg",
-                                    height: 50,
-                                    width: 50,
+                                  GestureDetector(
+                                    child: Image.asset(
+                                      "assets/images/hotel.jpeg",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HotelScreen()),
+                                      );
+                                    },
                                   ),
                                   const SizedBox(height: 4),
                                   const Text("Hotels"),
@@ -531,10 +620,20 @@ class Homescreen extends ConsumerWidget {
                               const SizedBox(width: 30),
                               Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/flight.webp",
-                                    height: 50,
-                                    width: 50,
+                                  GestureDetector(
+                                    child: Image.asset(
+                                      "assets/images/flight.webp",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                FlightScreen()),
+                                      );
+                                    },
                                   ),
                                   const SizedBox(height: 4),
                                   const Text("Flights"),
@@ -589,50 +688,95 @@ class Homescreen extends ConsumerWidget {
                       child: Row(
                         children: [
                           Column(children: [
-                            Image.asset(
-                              "assets/images/fashion.jpeg",
-                              height: 50,
-                              width: 50,
+                            GestureDetector(
+                              child: Image.asset(
+                                "assets/images/fashion.jpeg",
+                                height: 50,
+                                width: 50,
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FashionScreen()),
+                                );
+                              },
                             ),
                             SizedBox(height: 4),
                             Text('Fashion'),
                           ]),
                           SizedBox(width: 20),
                           Column(children: [
-                            Image.asset(
-                              "assets/images/footwear.jpeg",
-                              height: 50,
-                              width: 50,
+                            GestureDetector(
+                              child: Image.asset(
+                                "assets/images/footwear.jpeg",
+                                height: 50,
+                                width: 50,
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FootwearScreen()),
+                                );
+                              },
                             ),
                             SizedBox(height: 4),
                             Text('Footwear'),
                           ]),
                           SizedBox(width: 20),
                           Column(children: [
-                            Image.asset(
-                              "assets/images/watches.jpeg",
-                              height: 50,
-                              width: 50,
+                            GestureDetector(
+                              child: Image.asset(
+                                "assets/images/watches.jpeg",
+                                height: 50,
+                                width: 50,
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WatchesScreen()),
+                                );
+                              },
                             ),
                             SizedBox(height: 4),
                             Text('Watches'),
                           ]),
                           SizedBox(width: 20),
                           Column(children: [
-                            Image.asset(
-                              "assets/images/jewellery.png",
-                              height: 50,
-                              width: 50,
+                            GestureDetector(
+                              child: Image.asset(
+                                "assets/images/jewellery.png",
+                                height: 50,
+                                width: 50,
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => JewelryScreen()),
+                                );
+                              },
                             ),
                             SizedBox(height: 4),
                             Text('Jewellery'),
                           ]),
                           SizedBox(width: 20),
                           Column(children: [
-                            Image.asset(
-                              "assets/images/eyewear.jpeg",
-                              height: 50,
-                              width: 50,
+                            GestureDetector(
+                              child: Image.asset(
+                                "assets/images/eyewear.jpeg",
+                                height: 50,
+                                width: 50,
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EyewearScreen()),
+                                );
+                              },
                             ),
                             SizedBox(height: 4),
                             Text('Eyewear')
@@ -903,13 +1047,13 @@ class Homescreen extends ConsumerWidget {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            isScrollControlled: true, 
+            isScrollControlled: true,
             builder: (context) {
 
               return SizedBox(
 
                 height: MediaQuery.of(context).size.height * 0.7,
-                child: ChatScreen(), 
+                child: ChatScreen(),
               );
             },
           );
