@@ -98,9 +98,17 @@ class Homescreen extends ConsumerWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, top: 20),
-                  child: Image.asset(
-                    "assets/images/finance.jpg",
-                    width: 100,
+                  child: GestureDetector(
+                    child: Image.asset(
+                      "assets/images/finance.jpg",
+                      width: 100,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CardScreen()),
+                      );
+                    },
                   ),
                 ),
               ],
