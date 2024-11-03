@@ -75,8 +75,8 @@ flutter:
   assets:
     - assets/svg/
     - assets/images/
-    # - assets/tataneuappclone2-f3f9cd4e5508.json
 
+    # - assets/tataneuappclone2-f3f9cd4e5508.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
