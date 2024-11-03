@@ -59,7 +59,9 @@ final flightItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final flightSearchQueryProvider = StateProvider<String>((ref) => "");
 
 class FlightScreen extends ConsumerWidget {
-  const FlightScreen({Key? key}) : super(key: key);
+
+  const FlightScreen({super.key});
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

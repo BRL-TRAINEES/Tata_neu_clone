@@ -18,6 +18,7 @@ class ApplianceItemDetail extends StatefulWidget {
   _ApplianceItemDetailState createState() => _ApplianceItemDetailState();
 }
 
+
 class _ApplianceItemDetailState extends State<ApplianceItemDetail> {
   final TextEditingController _reviewController = TextEditingController();
   final List<String> _reviews = [];

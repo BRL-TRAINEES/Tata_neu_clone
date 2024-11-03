@@ -7,16 +7,17 @@ class MedicineItemDetail extends StatefulWidget {
   final String image;
 
   const MedicineItemDetail({
-    Key? key,
+    Key? key, // Changed to Key? for proper null safety
     required this.name,
     required this.category,
     required this.price,
     required this.image,
-  }) : super(key: key);
+  }) : super(key: key); // Correctly passing the key to the superclass
 
   @override
   _MedicineItemDetailState createState() => _MedicineItemDetailState();
 }
+
 
 class _MedicineItemDetailState extends State<MedicineItemDetail> {
   final TextEditingController _reviewController = TextEditingController();

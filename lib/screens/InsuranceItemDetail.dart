@@ -12,11 +12,12 @@ class InsuranceItemDetail extends StatefulWidget {
     required this.company,
     required this.premium,
     required this.image,
-  }) : super(key: key);
+  }) : super(key: key); // Correctly passing the key to the superclass
 
   @override
   _InsuranceItemDetailState createState() => _InsuranceItemDetailState();
 }
+
 
 class _InsuranceItemDetailState extends State<InsuranceItemDetail> {
   final TextEditingController _reviewController = TextEditingController();
