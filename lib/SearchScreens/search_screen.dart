@@ -110,13 +110,13 @@ class SearchScreen extends ConsumerWidget {
                           MaterialPageRoute(
                               builder: (context) => WatchesScreen()),
                         );
-                      } else if (item.name == 'Jewellary') {
+                      } else if (item.name == 'Jewellery') {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => JewelryScreen()),
                         );
-                      } else if (item.name == 'Eye Wear') {
+                      } else if (item.name == 'Eyewear') {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
