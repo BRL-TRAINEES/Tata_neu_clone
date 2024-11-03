@@ -21,6 +21,7 @@ import 'package:tataneu_clone/screens/flightsScreen.dart';
 import 'package:tataneu_clone/screens/ApplianceScreen.dart';
 import 'package:tataneu_clone/screens/jwelleryScreen.dart';
 import 'package:tataneu_clone/screens/watchesScreen.dart';
+import 'package:tataneu_clone/screens/chat_screen.dart';
 
 class Homescreen extends ConsumerWidget {
   const Homescreen({super.key});
@@ -407,7 +408,7 @@ class Homescreen extends ConsumerWidget {
                                 children: [
                                   GestureDetector(
                                     child: Image.asset(
-                                      "assets/images/xiaomi.png",
+                                      "assets/images/mobile.png",
                                       height: 50,
                                       width: 50,
                                     ),
@@ -1033,6 +1034,21 @@ class Homescreen extends ConsumerWidget {
             label: '',
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) {
+              return Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: ChatScreen(),
+              );
+            },
+          );
+        },
+        child: Icon(Icons.chat),
       ),
     );
   }
