@@ -1,65 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tataneu_clone/screens/ApplianceItemDetails.dart';
+import 'package:tataneu_clone/screens/FashionItemDetail.dart'; // Import the item details screen
 
-final applianceItemsProvider = Provider<List<Map<String, String>>>((ref) {
+final fashionItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
-      "name": "Refrigerator",
-      "category": "Kitchen Appliance",
-      "price": "\$600.00",
-      "image": "assets/images/refrigerator.png",
+      "name": "T-Shirt",
+      "category": "Clothing",
+      "price": "\$10.00",
+      "image": "assets/images/tshirt.png",
     },
     {
-      "name": "Washing Machine",
-      "category": "Laundry Appliance",
-      "price": "\$400.00",
-      "image": "assets/images/washingmachine.png",
-    },
-    {
-      "name": "Microwave Oven",
-      "category": "Kitchen Appliance",
-      "price": "\$100.00",
-      "image": "assets/images/microwave.png",
-    },
-    {
-      "name": "Air Conditioner",
-      "category": "Cooling Appliance",
-      "price": "\$800.00",
-      "image": "assets/images/airconditioner.png",
-    },
-    {
-      "name": "Electric Kettle",
-      "category": "Kitchen Appliance",
+      "name": "Jeans",
+      "category": "Clothing",
       "price": "\$30.00",
-      "image": "assets/images/electrickettle.png",
+      "image": "assets/images/jeans.png",
     },
     {
-      "name": "Dishwasher",
-      "category": "Kitchen Appliance",
-      "price": "\$500.00",
-      "image": "assets/images/dishwasher.png",
+      "name": "Dress",
+      "category": "Clothing",
+      "price": "\$25.00",
+      "image": "assets/images/dress.png",
     },
     {
-      "name": "Blender",
-      "category": "Kitchen Appliance",
+      "name": "Jacket",
+      "category": "Outerwear",
       "price": "\$50.00",
-      "image": "assets/images/blender.png",
+      "image": "assets/images/jacket.png",
+    },
+    {
+      "name": "Shorts",
+      "category": "Clothing",
+      "price": "\$40.00",
+      "image": "assets/images/shorts.png",
+    },
+    {
+      "name": "Tops",
+      "category": "Clothing",
+      "price": "\$45.00",
+      "image": "assets/images/tops.png",
+    },
+    {
+      "name": "Shirts",
+      "category": "Clothing",
+      "price": "\$30.00",
+      "image": "assets/images/shirts.png",
+    },
+    {
+      "name": "Socks",
+      "category": "Clothing",
+      "price": "\$5.00",
+      "image": "assets/images/socks.png",
     },
   ];
 });
 
-final applianceSearchQueryProvider = StateProvider<String>((ref) => "");
+final searchQueryProvider = StateProvider<String>((ref) => "");
 
-class ApplianceScreen extends ConsumerWidget {
-  const ApplianceScreen({Key? key}) : super(key: key);
+class FashionScreen extends ConsumerWidget {
+  const FashionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final applianceItems = ref.watch(applianceItemsProvider);
-    final searchQuery = ref.watch(applianceSearchQueryProvider);
+    final fashionItems = ref.watch(fashionItemsProvider);
+    final searchQuery = ref.watch(searchQueryProvider);
 
-    final filteredItems = applianceItems
+    final filteredItems = fashionItems
         .where((item) =>
             item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
         .toList();
@@ -68,8 +74,8 @@ class ApplianceScreen extends ConsumerWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Appliance Store',
-            style: TextStyle(color: Colors.black)),
+        title:
+            const Text('Fashion Store', style: TextStyle(color: Colors.black)),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
@@ -80,7 +86,7 @@ class ApplianceScreen extends ConsumerWidget {
               decoration: InputDecoration(
                 hintText: 'Search items...',
                 filled: true,
-                fillColor: Colors.grey[200],
+                fillColor: const Color.fromARGB(255, 231, 229, 229),
                 contentPadding: const EdgeInsets.symmetric(
                     vertical: 12.0, horizontal: 16.0),
                 enabledBorder: OutlineInputBorder(
@@ -93,29 +99,29 @@ class ApplianceScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                ref.read(applianceSearchQueryProvider.notifier).state = query;
+                ref.read(searchQueryProvider.notifier).state = query;
               },
             ),
             const SizedBox(height: 20),
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Two items per row
+                  crossAxisCount: 2,
                   crossAxisSpacing: 10.0,
                   mainAxisSpacing: 10.0,
-                  childAspectRatio: 0.7, // Aspect ratio for the grid items
+                  childAspectRatio: 0.7,
                 ),
                 itemCount: filteredItems.length,
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   return Card(
-                    color: const Color.fromARGB(255, 215, 216, 215),
+                    color: const Color.fromARGB(255, 223, 224, 223),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ApplianceItemDetail(
+                            builder: (context) => FashionItemDetail(
                               name: item["name"]!,
                               category: item["category"]!,
                               price: item["price"]!,
@@ -129,8 +135,8 @@ class ApplianceScreen extends ConsumerWidget {
                         children: [
                           Image.asset(
                             item["image"]!,
-                            width: 80,
-                            height: 80,
+                            width: 95,
+                            height: 95,
                             fit: BoxFit.cover,
                           ),
                           const SizedBox(height: 8),

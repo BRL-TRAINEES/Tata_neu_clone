@@ -1,65 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tataneu_clone/screens/ApplianceItemDetails.dart';
+import 'package:tataneu_clone/screens/EyewearItemDetails.dart'; // Import the item details screen
 
-final applianceItemsProvider = Provider<List<Map<String, String>>>((ref) {
+final eyewearItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
-      "name": "Refrigerator",
-      "category": "Kitchen Appliance",
-      "price": "\$600.00",
-      "image": "assets/images/refrigerator.png",
-    },
-    {
-      "name": "Washing Machine",
-      "category": "Laundry Appliance",
-      "price": "\$400.00",
-      "image": "assets/images/washingmachine.png",
-    },
-    {
-      "name": "Microwave Oven",
-      "category": "Kitchen Appliance",
-      "price": "\$100.00",
-      "image": "assets/images/microwave.png",
-    },
-    {
-      "name": "Air Conditioner",
-      "category": "Cooling Appliance",
-      "price": "\$800.00",
-      "image": "assets/images/airconditioner.png",
-    },
-    {
-      "name": "Electric Kettle",
-      "category": "Kitchen Appliance",
-      "price": "\$30.00",
-      "image": "assets/images/electrickettle.png",
-    },
-    {
-      "name": "Dishwasher",
-      "category": "Kitchen Appliance",
-      "price": "\$500.00",
-      "image": "assets/images/dishwasher.png",
-    },
-    {
-      "name": "Blender",
-      "category": "Kitchen Appliance",
+      "name": "Sunglasses",
+      "category": "Fashion",
       "price": "\$50.00",
-      "image": "assets/images/blender.png",
+      "image": "assets/images/sunglasses.png",
+    },
+    {
+      "name": "Reading Glasses",
+      "category": "Prescription",
+      "price": "\$30.00",
+      "image": "assets/images/readingGlass.png",
+    },
+    {
+      "name": "Blue Light Glasses",
+      "category": "Protective",
+      "price": "\$45.00",
+      "image": "assets/images/bluelight.png",
+    },
+    {
+      "name": "Aviator Sunglasses",
+      "category": "Fashion",
+      "price": "\$70.00",
+      "image": "assets/images/aviatorSunglass.png",
+    },
+    {
+      "name": "Cat Eye Glasses",
+      "category": "Fashion",
+      "price": "\$60.00",
+      "image": "assets/images/catEyeGlass.png",
+    },
+    {
+      "name": "Round Glasses",
+      "category": "Fashion",
+      "price": "\$55.00",
+      "image": "assets/images/roundGlass.png",
+    },
+    {
+      "name": "Sports Goggles",
+      "category": "Sport",
+      "price": "\$40.00",
+      "image": "assets/images/sportsGoggles.png",
     },
   ];
 });
 
-final applianceSearchQueryProvider = StateProvider<String>((ref) => "");
+final searchQueryProvider = StateProvider<String>((ref) => "");
 
-class ApplianceScreen extends ConsumerWidget {
-  const ApplianceScreen({Key? key}) : super(key: key);
+class EyewearScreen extends ConsumerWidget {
+  const EyewearScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final applianceItems = ref.watch(applianceItemsProvider);
-    final searchQuery = ref.watch(applianceSearchQueryProvider);
+    final eyewearItems = ref.watch(eyewearItemsProvider);
+    final searchQuery = ref.watch(searchQueryProvider);
 
-    final filteredItems = applianceItems
+    final filteredItems = eyewearItems
         .where((item) =>
             item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
         .toList();
@@ -68,8 +68,8 @@ class ApplianceScreen extends ConsumerWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Appliance Store',
-            style: TextStyle(color: Colors.black)),
+        title:
+            const Text('Eyewear Store', style: TextStyle(color: Colors.black)),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
@@ -93,29 +93,29 @@ class ApplianceScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                ref.read(applianceSearchQueryProvider.notifier).state = query;
+                ref.read(searchQueryProvider.notifier).state = query;
               },
             ),
             const SizedBox(height: 20),
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Two items per row
+                  crossAxisCount: 2,
                   crossAxisSpacing: 10.0,
                   mainAxisSpacing: 10.0,
-                  childAspectRatio: 0.7, // Aspect ratio for the grid items
+                  childAspectRatio: 0.7,
                 ),
                 itemCount: filteredItems.length,
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   return Card(
-                    color: const Color.fromARGB(255, 215, 216, 215),
+                    color: const Color.fromARGB(255, 226, 222, 231),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ApplianceItemDetail(
+                            builder: (context) => EyewearItemDetail(
                               name: item["name"]!,
                               category: item["category"]!,
                               price: item["price"]!,
@@ -129,14 +129,16 @@ class ApplianceScreen extends ConsumerWidget {
                         children: [
                           Image.asset(
                             item["image"]!,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
+                            width: 130,
+                            height: 130,
+                            fit: BoxFit
+                                .contain, // Ensures the entire image is visible
                           ),
                           const SizedBox(height: 8),
-                          Text(item["name"]!,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            item["name"]!,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           Text("${item["category"]} - ${item["price"]}"),
                         ],
                       ),

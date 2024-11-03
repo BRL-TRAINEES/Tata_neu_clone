@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tataneu_clone/screens/MedicineItemDetails.dart';
 
-
 final medicineItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
@@ -49,6 +48,7 @@ final medicineItemsProvider = Provider<List<Map<String, String>>>((ref) {
     },
   ];
 });
+
 final searchQueryProvider = StateProvider<String>((ref) => "");
 
 class MedicineScreen extends ConsumerWidget {
@@ -68,7 +68,9 @@ class MedicineScreen extends ConsumerWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Medicine Store'),
+        title:
+            const Text('Medicine Store', style: TextStyle(color: Colors.black)),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -96,22 +98,19 @@ class MedicineScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Two items per row
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  childAspectRatio: 0.7, // Aspect ratio for the grid items
+                ),
                 itemCount: filteredItems.length,
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   return Card(
-                    color: const Color.fromARGB(255, 200, 220, 244),
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    child: ListTile(
-                      leading: Image.asset(
-                        item["image"]!,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      ),
-                      title: Text(item["name"]!),
-                      subtitle: Text("${item["category"]} - ${item["price"]}"),
+                    color: const Color.fromARGB(255, 223, 237, 237),
+                    child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
@@ -125,6 +124,25 @@ class MedicineScreen extends ConsumerWidget {
                           ),
                         );
                       },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            item["image"]!,
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(item["name"]!,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            "${item["category"]} - ${item["price"]}",
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

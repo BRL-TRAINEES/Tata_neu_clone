@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tataneu_clone/provider.dart';
-import 'package:tataneu_clone/ItemsLists/item_data.dart';
-import 'package:tataneu_clone/models/item_model.dart';
 import 'package:tataneu_clone/screens/ApplianceScreen.dart';
+import 'package:tataneu_clone/screens/EyewearScreen.dart';
+import 'package:tataneu_clone/screens/FashionScreen.dart';
+import 'package:tataneu_clone/screens/FootwearScreen.dart';
 import 'package:tataneu_clone/screens/GroceryScreen.dart';
 import 'package:tataneu_clone/screens/InsuranceScreen.dart';
 import 'package:tataneu_clone/screens/MedicineScreen.dart';
+import 'package:tataneu_clone/screens/cardscreen.dart';
 import 'package:tataneu_clone/screens/flightsScreen.dart';
 import 'package:tataneu_clone/screens/HotelScreen.dart';
+import 'package:tataneu_clone/screens/MobileScreen.dart';
+import 'package:tataneu_clone/screens/jwelleryScreen.dart';
+import 'package:tataneu_clone/screens/watchesScreen.dart';
 
 class SearchScreen extends ConsumerWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -82,6 +87,41 @@ class SearchScreen extends ConsumerWidget {
                           MaterialPageRoute(
                               builder: (context) => MedicineScreen()),
                         );
+                      } else if (item.name == 'Fashion') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FashionScreen()),
+                        );
+                      } else if (item.name == 'Cards') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CardScreen()),
+                        );
+                      } else if (item.name == 'Footwears') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FootwearScreen()),
+                        );
+                      } else if (item.name == 'Watches') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WatchesScreen()),
+                        );
+                      } else if (item.name == 'Jewellary') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => JewelryScreen()),
+                        );
+                      } else if (item.name == 'Eye Wear') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EyewearScreen()),
+                        );
                       } else if (item.name == 'Appliances') {
                         Navigator.push(
                           context,
@@ -99,6 +139,12 @@ class SearchScreen extends ConsumerWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => HotelScreen()),
+                        );
+                      } else if (item.name == 'Mobiles') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MobileScreen()),
                         );
                       } else {
                         Navigator.push(

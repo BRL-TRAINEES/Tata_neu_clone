@@ -1,65 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tataneu_clone/screens/ApplianceItemDetails.dart';
+import 'package:tataneu_clone/screens/FootwearItemDetail.dart'; // Import the item details screen
 
-final applianceItemsProvider = Provider<List<Map<String, String>>>((ref) {
+final footwearItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
-      "name": "Refrigerator",
-      "category": "Kitchen Appliance",
-      "price": "\$600.00",
-      "image": "assets/images/refrigerator.png",
+      "name": "Sneakers",
+      "category": "Footwear",
+      "price": "\$60.00",
+      "image": "assets/images/sneakers.png",
     },
     {
-      "name": "Washing Machine",
-      "category": "Laundry Appliance",
-      "price": "\$400.00",
-      "image": "assets/images/washingmachine.png",
+      "name": "Sandals",
+      "category": "Footwear",
+      "price": "\$25.00",
+      "image": "assets/images/sandels.png",
     },
     {
-      "name": "Microwave Oven",
-      "category": "Kitchen Appliance",
-      "price": "\$100.00",
-      "image": "assets/images/microwave.png",
+      "name": "Boots",
+      "category": "Footwear",
+      "price": "\$80.00",
+      "image": "assets/images/boots.png",
     },
     {
-      "name": "Air Conditioner",
-      "category": "Cooling Appliance",
-      "price": "\$800.00",
-      "image": "assets/images/airconditioner.png",
+      "name": "Loafers",
+      "category": "Footwear",
+      "price": "\$45.00",
+      "image": "assets/images/loafers.png",
     },
     {
-      "name": "Electric Kettle",
-      "category": "Kitchen Appliance",
-      "price": "\$30.00",
-      "image": "assets/images/electrickettle.png",
+      "name": "",
+      "category": "Footwear",
+      "price": "\$15.00",
+      "image": "assets/images/flipflops.png",
     },
     {
-      "name": "Dishwasher",
-      "category": "Kitchen Appliance",
-      "price": "\$500.00",
-      "image": "assets/images/dishwasher.png",
+      "name": "Heels",
+      "category": "Footwear",
+      "price": "\$70.00",
+      "image": "assets/images/heels.png",
     },
     {
-      "name": "Blender",
-      "category": "Kitchen Appliance",
-      "price": "\$50.00",
-      "image": "assets/images/blender.png",
+      "name": "Brogues",
+      "category": "Footwear",
+      "price": "\$55.00",
+      "image": "assets/images/broques.png",
     },
   ];
 });
 
-final applianceSearchQueryProvider = StateProvider<String>((ref) => "");
+final searchQueryProvider = StateProvider<String>((ref) => "");
 
-class ApplianceScreen extends ConsumerWidget {
-  const ApplianceScreen({Key? key}) : super(key: key);
+class FootwearScreen extends ConsumerWidget {
+  const FootwearScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final applianceItems = ref.watch(applianceItemsProvider);
-    final searchQuery = ref.watch(applianceSearchQueryProvider);
+    final footwearItems = ref.watch(footwearItemsProvider);
+    final searchQuery = ref.watch(searchQueryProvider);
 
-    final filteredItems = applianceItems
+    final filteredItems = footwearItems
         .where((item) =>
             item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
         .toList();
@@ -68,8 +68,8 @@ class ApplianceScreen extends ConsumerWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Appliance Store',
-            style: TextStyle(color: Colors.black)),
+        title:
+            const Text('Footwear Store', style: TextStyle(color: Colors.black)),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
@@ -93,7 +93,7 @@ class ApplianceScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                ref.read(applianceSearchQueryProvider.notifier).state = query;
+                ref.read(searchQueryProvider.notifier).state = query;
               },
             ),
             const SizedBox(height: 20),
@@ -109,13 +109,13 @@ class ApplianceScreen extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   return Card(
-                    color: const Color.fromARGB(255, 215, 216, 215),
+                    color: const Color.fromARGB(255, 223, 225, 223),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ApplianceItemDetail(
+                            builder: (context) => FootwearItemDetail(
                               name: item["name"]!,
                               category: item["category"]!,
                               price: item["price"]!,
@@ -129,8 +129,8 @@ class ApplianceScreen extends ConsumerWidget {
                         children: [
                           Image.asset(
                             item["image"]!,
-                            width: 80,
-                            height: 80,
+                            width: 95,
+                            height: 95,
                             fit: BoxFit.cover,
                           ),
                           const SizedBox(height: 8),

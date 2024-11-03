@@ -1,65 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tataneu_clone/screens/ApplianceItemDetails.dart';
+import 'package:tataneu_clone/screens/WatchItemdetails.dart'; // Import the item details screen
 
-final applianceItemsProvider = Provider<List<Map<String, String>>>((ref) {
+final watchesItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
-      "name": "Refrigerator",
-      "category": "Kitchen Appliance",
-      "price": "\$600.00",
-      "image": "assets/images/refrigerator.png",
+      "name": "Classic Leather Watch",
+      "category": "Wrist Watch",
+      "price": "\$120.00",
+      "image": "assets/images/leatherwatch.png",
     },
     {
-      "name": "Washing Machine",
-      "category": "Laundry Appliance",
-      "price": "\$400.00",
-      "image": "assets/images/washingmachine.png",
+      "name": "steel",
+      "category": "Wrist Watch",
+      "price": "\$180.00",
+      "image": "assets/images/steelwatch.png",
     },
     {
-      "name": "Microwave Oven",
-      "category": "Kitchen Appliance",
-      "price": "\$100.00",
-      "image": "assets/images/microwave.png",
+      "name": "Ceramic Watch",
+      "category": "Wrist Watch",
+      "price": "\$220.00",
+      "image": "assets/images/ceramicwatch.png",
     },
     {
-      "name": "Air Conditioner",
-      "category": "Cooling Appliance",
-      "price": "\$800.00",
-      "image": "assets/images/airconditioner.png",
+      "name": "Smart Fitness Watch",
+      "category": "Wrist Watch",
+      "price": "\$250.00",
+      "image": "assets/images/fitnesswatch.png",
     },
     {
-      "name": "Electric Kettle",
-      "category": "Kitchen Appliance",
-      "price": "\$30.00",
-      "image": "assets/images/electrickettle.png",
+      "name": "Fashion Wrist Watch",
+      "category": "Wrist Watch",
+      "price": "\$70.00",
+      "image": "assets/images/fashionwatch.png",
     },
     {
-      "name": "Dishwasher",
-      "category": "Kitchen Appliance",
-      "price": "\$500.00",
-      "image": "assets/images/dishwasher.png",
+      "name": "Luxury Diamond Watch",
+      "category": "Wrist Watch",
+      "price": "\$1000.00",
+      "image": "assets/images/diamondwatch.png",
     },
     {
-      "name": "Blender",
-      "category": "Kitchen Appliance",
-      "price": "\$50.00",
-      "image": "assets/images/blender.png",
+      "name": "Diving Watch",
+      "category": "Wrist Watch",
+      "price": "\$300.00",
+      "image": "assets/images/divingwatch.png",
     },
   ];
 });
 
-final applianceSearchQueryProvider = StateProvider<String>((ref) => "");
+final searchQueryProvider = StateProvider<String>((ref) => "");
 
-class ApplianceScreen extends ConsumerWidget {
-  const ApplianceScreen({Key? key}) : super(key: key);
+class WatchesScreen extends ConsumerWidget {
+  const WatchesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final applianceItems = ref.watch(applianceItemsProvider);
-    final searchQuery = ref.watch(applianceSearchQueryProvider);
+    final watchesItems = ref.watch(watchesItemsProvider);
+    final searchQuery = ref.watch(searchQueryProvider);
 
-    final filteredItems = applianceItems
+    final filteredItems = watchesItems
         .where((item) =>
             item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
         .toList();
@@ -68,7 +68,7 @@ class ApplianceScreen extends ConsumerWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Appliance Store',
+        title: const Text('Wrist Watches Store',
             style: TextStyle(color: Colors.black)),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
@@ -93,7 +93,7 @@ class ApplianceScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                ref.read(applianceSearchQueryProvider.notifier).state = query;
+                ref.read(searchQueryProvider.notifier).state = query;
               },
             ),
             const SizedBox(height: 20),
@@ -109,13 +109,13 @@ class ApplianceScreen extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   return Card(
-                    color: const Color.fromARGB(255, 215, 216, 215),
+                    color: const Color.fromARGB(255, 239, 241, 230),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ApplianceItemDetail(
+                            builder: (context) => WatchesItemDetail(
                               name: item["name"]!,
                               category: item["category"]!,
                               price: item["price"]!,
@@ -129,8 +129,8 @@ class ApplianceScreen extends ConsumerWidget {
                         children: [
                           Image.asset(
                             item["image"]!,
-                            width: 80,
-                            height: 80,
+                            width: 95,
+                            height: 95,
                             fit: BoxFit.cover,
                           ),
                           const SizedBox(height: 8),

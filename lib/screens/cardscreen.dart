@@ -1,75 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tataneu_clone/screens/ApplianceItemDetails.dart';
+import 'package:tataneu_clone/screens/cardItemdetails.dart';
 
-final applianceItemsProvider = Provider<List<Map<String, String>>>((ref) {
+final cardItemsProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
-      "name": "Refrigerator",
-      "category": "Kitchen Appliance",
-      "price": "\$600.00",
-      "image": "assets/images/refrigerator.png",
+      "type": "Visa Card",
+      "category": "Credit Card",
+      "price": "\$52.00",
+      "image": "assets/images/visa.png",
     },
     {
-      "name": "Washing Machine",
-      "category": "Laundry Appliance",
-      "price": "\$400.00",
-      "image": "assets/images/washingmachine.png",
+      "type": "MasterCard",
+      "category": "Credit Card",
+      "price": "\$43.50",
+      "image": "assets/images/mastercard.png",
     },
     {
-      "name": "Microwave Oven",
-      "category": "Kitchen Appliance",
-      "price": "\$100.00",
-      "image": "assets/images/microwave.png",
+      "type": "Debit Card",
+      "category": "Bank Card",
+      "price": "\$34.00",
+      "image": "assets/images/debitcard.png",
     },
     {
-      "name": "Air Conditioner",
-      "category": "Cooling Appliance",
-      "price": "\$800.00",
-      "image": "assets/images/airconditioner.png",
+      "type": "American Express",
+      "category": "Credit Card",
+      "price": "\$46.02",
+      "image": "assets/images/amex.png",
     },
     {
-      "name": "Electric Kettle",
-      "category": "Kitchen Appliance",
-      "price": "\$30.00",
-      "image": "assets/images/electrickettle.png",
+      "type": "Discover Card",
+      "category": "Credit Card",
+      "price": "\$32.10",
+      "image": "assets/images/discover.png",
     },
     {
-      "name": "Dishwasher",
-      "category": "Kitchen Appliance",
-      "price": "\$500.00",
-      "image": "assets/images/dishwasher.png",
-    },
-    {
-      "name": "Blender",
-      "category": "Kitchen Appliance",
+      "type": "JCB Card",
+      "category": "Credit Card",
       "price": "\$50.00",
-      "image": "assets/images/blender.png",
+      "image": "assets/images/jcb.png",
+    },
+    {
+      "type": "UnionPay",
+      "category": "Credit Card",
+      "price": "\$27.40",
+      "image": "assets/images/unionpay.png",
     },
   ];
 });
 
-final applianceSearchQueryProvider = StateProvider<String>((ref) => "");
+final cardSearchQueryProvider = StateProvider<String>((ref) => "");
 
-class ApplianceScreen extends ConsumerWidget {
-  const ApplianceScreen({Key? key}) : super(key: key);
+class CardScreen extends ConsumerWidget {
+  const CardScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final applianceItems = ref.watch(applianceItemsProvider);
-    final searchQuery = ref.watch(applianceSearchQueryProvider);
+    final cardItems = ref.watch(cardItemsProvider);
+    final searchQuery = ref.watch(cardSearchQueryProvider);
 
-    final filteredItems = applianceItems
+    final filteredItems = cardItems
         .where((item) =>
-            item["name"]!.toLowerCase().contains(searchQuery.toLowerCase()))
+            item["type"]!.toLowerCase().contains(searchQuery.toLowerCase()))
         .toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Appliance Store',
-            style: TextStyle(color: Colors.black)),
+        title:
+            const Text('Payment Cards', style: TextStyle(color: Colors.black)),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
@@ -78,7 +78,7 @@ class ApplianceScreen extends ConsumerWidget {
           children: [
             TextField(
               decoration: InputDecoration(
-                hintText: 'Search items...',
+                hintText: 'Search cards...',
                 filled: true,
                 fillColor: Colors.grey[200],
                 contentPadding: const EdgeInsets.symmetric(
@@ -93,30 +93,30 @@ class ApplianceScreen extends ConsumerWidget {
                 ),
               ),
               onChanged: (query) {
-                ref.read(applianceSearchQueryProvider.notifier).state = query;
+                ref.read(cardSearchQueryProvider.notifier).state = query;
               },
             ),
             const SizedBox(height: 20),
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Two items per row
+                  crossAxisCount: 2,
                   crossAxisSpacing: 10.0,
                   mainAxisSpacing: 10.0,
-                  childAspectRatio: 0.7, // Aspect ratio for the grid items
+                  childAspectRatio: 0.7,
                 ),
                 itemCount: filteredItems.length,
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   return Card(
-                    color: const Color.fromARGB(255, 215, 216, 215),
+                    color: const Color.fromARGB(255, 244, 245, 244),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ApplianceItemDetail(
-                              name: item["name"]!,
+                            builder: (context) => CardItemDetail(
+                              type: item["type"]!,
                               category: item["category"]!,
                               price: item["price"]!,
                               image: item["image"]!,
@@ -129,14 +129,15 @@ class ApplianceScreen extends ConsumerWidget {
                         children: [
                           Image.asset(
                             item["image"]!,
-                            width: 80,
-                            height: 80,
+                            width: 100,
+                            height: 100,
                             fit: BoxFit.cover,
                           ),
                           const SizedBox(height: 8),
-                          Text(item["name"]!,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            item["type"]!,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           Text("${item["category"]} - ${item["price"]}"),
                         ],
                       ),

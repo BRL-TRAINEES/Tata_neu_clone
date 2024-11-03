@@ -68,7 +68,9 @@ class InsuranceScreen extends ConsumerWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Insurance Options'),
+        title: const Text('Insurance Options',
+            style: TextStyle(color: Colors.black)),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -96,22 +98,19 @@ class InsuranceScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Number of items per row
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  childAspectRatio: 0.7, // Adjust aspect ratio as needed
+                ),
                 itemCount: filteredItems.length,
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   return Card(
                     color: const Color.fromARGB(255, 242, 235, 247),
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    child: ListTile(
-                      leading: Image.asset(
-                        item["image"]!,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      ),
-                      title: Text(item["name"]!),
-                      subtitle: Text("${item["company"]} - ${item["premium"]}"),
+                    child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
@@ -125,6 +124,25 @@ class InsuranceScreen extends ConsumerWidget {
                           ),
                         );
                       },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            item["image"]!,
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(item["name"]!,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            "${item["company"]} - ${item["premium"]}",
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

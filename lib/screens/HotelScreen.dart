@@ -68,7 +68,9 @@ class HotelScreen extends ConsumerWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Hotel Booking'),
+        title:
+            const Text('Hotel Booking', style: TextStyle(color: Colors.black)),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -96,22 +98,19 @@ class HotelScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Number of items per row
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  childAspectRatio: 0.7, // Adjust aspect ratio as needed
+                ),
                 itemCount: filteredItems.length,
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   return Card(
                     color: const Color.fromARGB(255, 243, 244, 225),
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    child: ListTile(
-                      leading: Image.asset(
-                        item["image"]!,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      ),
-                      title: Text(item["name"]!),
-                      subtitle: Text("${item["location"]} - ${item["price"]}"),
+                    child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
@@ -125,6 +124,25 @@ class HotelScreen extends ConsumerWidget {
                           ),
                         );
                       },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            item["image"]!,
+                            width: 95,
+                            height: 95,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(item["name"]!,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            "${item["location"]} - ${item["price"]}",
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
