@@ -58,7 +58,7 @@ final fashionItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final searchQueryProvider = StateProvider<String>((ref) => "");
 
 class FashionScreen extends ConsumerWidget {
-  const FashionScreen({Key? key}) : super(key: key);
+  const FashionScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

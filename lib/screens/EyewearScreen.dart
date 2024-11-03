@@ -52,7 +52,7 @@ final eyewearItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final searchQueryProvider = StateProvider<String>((ref) => "");
 
 class EyewearScreen extends ConsumerWidget {
-  const EyewearScreen({Key? key}) : super(key: key);
+  const EyewearScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

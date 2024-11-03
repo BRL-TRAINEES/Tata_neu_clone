@@ -7,12 +7,12 @@ class InsuranceItemDetail extends StatefulWidget {
   final String image;
 
   const InsuranceItemDetail({
-    Key? key,
+    super.key,
     required this.name,
     required this.company,
     required this.premium,
     required this.image,
-  }) : super(key: key); // Correctly passing the key to the superclass
+  }); // Correctly passing the key to the superclass
 
   @override
   _InsuranceItemDetailState createState() => _InsuranceItemDetailState();

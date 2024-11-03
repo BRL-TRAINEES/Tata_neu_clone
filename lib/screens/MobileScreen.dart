@@ -52,7 +52,7 @@ final mobileItemsProvider = Provider<List<Map<String, String>>>((ref) {
 final mobileSearchQueryProvider = StateProvider<String>((ref) => "");
 
 class MobileScreen extends ConsumerWidget {
-  const MobileScreen({Key? key}) : super(key: key);
+  const MobileScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

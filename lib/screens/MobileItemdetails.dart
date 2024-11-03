@@ -7,12 +7,12 @@ class MobileItemDetail extends StatefulWidget {
   final String image;
 
   const MobileItemDetail({
-    Key? key,
+    super.key,
     required this.model,
     required this.brand,
     required this.price,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   _MobileItemDetailState createState() => _MobileItemDetailState();

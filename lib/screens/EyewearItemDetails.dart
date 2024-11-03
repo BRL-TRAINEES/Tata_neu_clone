@@ -7,12 +7,12 @@ class EyewearItemDetail extends StatefulWidget {
   final String image;
 
   const EyewearItemDetail({
-    Key? key,
+    super.key,
     required this.name,
     required this.category,
     required this.price,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   _EyewearItemDetailState createState() => _EyewearItemDetailState();
