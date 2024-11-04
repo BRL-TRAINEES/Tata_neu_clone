@@ -7,12 +7,12 @@ class MedicineItemDetail extends StatefulWidget {
   final String image;
 
   const MedicineItemDetail({
-    super.key, // Changed to Key? for proper null safety
+    super.key,
     required this.name,
     required this.category,
     required this.price,
     required this.image,
-  }); // Correctly passing the key to the superclass
+  });
 
   @override
   _MedicineItemDetailState createState() => _MedicineItemDetailState();
@@ -69,8 +69,8 @@ class _MedicineItemDetailState extends State<MedicineItemDetail> {
               const SizedBox(height: 20),
               Text(
                 'Name: ${widget.name}',
-                style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Text('Category: ${widget.category}',
@@ -107,8 +107,8 @@ class _MedicineItemDetailState extends State<MedicineItemDetail> {
                   children: [
                     const Text(
                       'Reviews',
-                      style:
-                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 19, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10),
                     SizedBox(

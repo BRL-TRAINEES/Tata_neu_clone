@@ -16,9 +16,7 @@ import 'package:tataneu_clone/screens/jwelleryScreen.dart';
 import 'package:tataneu_clone/screens/watchesScreen.dart';
 
 class SearchScreen extends ConsumerWidget {
-
-  const SearchScreen({super.key});
-
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -67,6 +67,13 @@ class Homescreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final navigationState = ref.watch(navigationProvider);
+    // final List<Widget> screens = [
+    //   Homescreen(),
+    //   Neupass(), 
+    //   Categories(), 
+    //   OfferScreen(),
+    //   ProfilePage(),
+    // ];
 
     final List<String> imagePaths = [
       "assets/images/moving1.jpg",
@@ -958,7 +965,7 @@ class Homescreen extends ConsumerWidget {
                       ]))))
         ]),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           switch (index) {
             case 0:
@@ -1059,7 +1066,7 @@ class Homescreen extends ConsumerWidget {
           );
         },
         child: Icon(Icons.chat),
-      ),
-    );
-  }
+     ),
+     );
+     }
 }

@@ -14,7 +14,11 @@ class FlightItemDetail extends StatefulWidget {
     required this.destination,
     required this.price,
     required this.image,
-  }); // Pass it to the super constructor here
+
+  });
+
+
+
 
   @override
   _FlightItemDetailState createState() => _FlightItemDetailState();

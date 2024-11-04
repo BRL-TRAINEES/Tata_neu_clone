@@ -12,7 +12,10 @@ class HotelItemDetail extends StatefulWidget {
     required this.location,
     required this.price,
     required this.image,
-  }); // Correctly passing the key to the superclass
+  });
+
+
+
 
   @override
   _HotelItemDetailState createState() => _HotelItemDetailState();

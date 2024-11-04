@@ -15,8 +15,8 @@ final navigationProvider =
 
 // Navigation state
 class NavigationState {
-  final bool isLogoVisible;
-  final int pageIndex;
+  final bool isLogoVisible; // This can be useful if you want to show/hide a logo
+  final int pageIndex; // Currently selected index for bottom navigation
 
   NavigationState({
     required this.isLogoVisible,
@@ -24,12 +24,12 @@ class NavigationState {
   });
 }
 
-// Navigation notifier with automatic slide functionality
+// Navigation notifier
 class NavigationNotifier extends StateNotifier<NavigationState> {
   NavigationNotifier()
       : super(NavigationState(isLogoVisible: true, pageIndex: 0)) {
     _startLogoTimer();
-    _startAutoSlide();
+    // Removed automatic slide functionality
   }
 
   Timer? _logoTimer;
@@ -86,6 +86,7 @@ final emailControllerProvider = Provider((ref) {
 // Search screen providers
 final searchTextProvider = StateProvider<String>((ref) => '');
 
+// Filtered items provider
 final filteredItemsProvider = Provider<List<Item>>((ref) {
   final searchText = ref.watch(searchTextProvider).toLowerCase();
   final items = ref.watch(itemDataProvider);
