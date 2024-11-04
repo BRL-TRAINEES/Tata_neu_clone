@@ -39,13 +39,14 @@ class NavigationNotifier extends StateNotifier<NavigationState> {
     _logoTimer = Timer(const Duration(seconds: 3), () {
       print('Logo timer finished');
       state = NavigationState(isLogoVisible: false, pageIndex: state.pageIndex);
+      _startAutoSlide();
     });
   }
 
   // Automatic slide between pages
   void _startAutoSlide() {
     _autoSlideTimer = Timer.periodic(Duration(seconds: 5), (timer) {
-      final nextIndex = (state.pageIndex + 1) % 3; // Assuming 3 pages
+      final nextIndex = (state.pageIndex + 1) % 5; //%5 for 5 pages
       state = NavigationState(
         isLogoVisible: state.isLogoVisible,
         pageIndex: nextIndex,
