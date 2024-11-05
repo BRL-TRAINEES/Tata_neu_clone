@@ -968,12 +968,12 @@ class Homescreen extends ConsumerWidget {
        bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           switch (index) {
-            case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Homescreen()),
-              );
-              break;
+            // case 0:
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => Homescreen()),
+            //   );
+            //   break;
             case 1:
               Navigator.push(
                 context,

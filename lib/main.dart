@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'screens/homescreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,13 @@ import 'screens/login_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+   await Hive.initFlutter();
+   await Hive.openBox<List<Map<String, String>>>('reviewsBox');
+  // var reviewsBox = await Hive.openBox<List<Map<String, String>>>('reviewsBox');
+
+  // Clear existing data from the box
+  // await reviewsBox.clear();
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
