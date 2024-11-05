@@ -25,7 +25,7 @@ class OfferScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Horizontally scrollable row of offers
+            
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -38,13 +38,13 @@ class OfferScreen extends StatelessWidget {
                           height: 100,
                           width: 100,
                           child: Image.asset(
-                            offer['image']!, // Path to each specific image
+                            offer['image']!, 
                             fit: BoxFit.cover,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          offer['caption']!, // Caption for each image
+                          offer['caption']!, 
                           style: const TextStyle(fontSize: 16),
                         ),
                       ],
@@ -53,9 +53,7 @@ class OfferScreen extends StatelessWidget {
                 }).toList(),
               ),
             ),
-            const SizedBox(height: 50), // Spacing between sections
-
-            // Two lines of text
+            const SizedBox(height: 50), 
             const Text(
               "Shop now ,save more",
               
@@ -66,12 +64,10 @@ class OfferScreen extends StatelessWidget {
               style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 16), // Spacing before the final image
-
-            // Image below the text
+            const SizedBox(height: 16), 
             Center(
               child: Image.asset(
-                'assets/images/moving5.jpg', // Replace with your specific image path
+                'assets/images/moving5.jpg', 
                 height: 200,
                 width: 500,
                 fit: BoxFit.cover,
