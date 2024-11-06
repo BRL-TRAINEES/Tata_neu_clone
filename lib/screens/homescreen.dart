@@ -69,8 +69,8 @@ class Homescreen extends ConsumerWidget {
     final navigationState = ref.watch(navigationProvider);
     // final List<Widget> screens = [
     //   Homescreen(),
-    //   Neupass(), 
-    //   Categories(), 
+    //   Neupass(),
+    //   Categories(),
     //   OfferScreen(),
     //   ProfilePage(),
     // ];
@@ -97,7 +97,8 @@ class Homescreen extends ConsumerWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                        MaterialPageRoute(
+                            builder: (context) => UserAccountScreen()),
                       );
                     },
                     child: SvgPicture.asset("assets/svg/account.svg"),
@@ -965,7 +966,7 @@ class Homescreen extends ConsumerWidget {
                       ]))))
         ]),
       ),
-       bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           switch (index) {
             case 0:
@@ -995,7 +996,7 @@ class Homescreen extends ConsumerWidget {
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfilePage()),
+                MaterialPageRoute(builder: (context) => UserAccountScreen()),
               );
               break;
           }
@@ -1056,9 +1057,7 @@ class Homescreen extends ConsumerWidget {
             context: context,
             isScrollControlled: true,
             builder: (context) {
-
               return SizedBox(
-
                 height: MediaQuery.of(context).size.height * 0.7,
                 child: ChatScreen(),
               );
@@ -1066,7 +1065,7 @@ class Homescreen extends ConsumerWidget {
           );
         },
         child: Icon(Icons.chat),
-     ),
-     );
-     }
+      ),
+    );
+  }
 }

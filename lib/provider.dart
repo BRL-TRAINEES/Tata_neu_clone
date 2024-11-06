@@ -15,7 +15,8 @@ final navigationProvider =
 
 // Navigation state
 class NavigationState {
-  final bool isLogoVisible; // This can be useful if you want to show/hide a logo
+  final bool
+      isLogoVisible; // This can be useful if you want to show/hide a logo
   final int pageIndex; // Currently selected index for bottom navigation
 
   NavigationState({

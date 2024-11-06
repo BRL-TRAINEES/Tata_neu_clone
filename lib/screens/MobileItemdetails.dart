@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class MobileItemDetail extends StatefulWidget {
   final String model;
@@ -20,15 +23,75 @@ class MobileItemDetail extends StatefulWidget {
 
 class _MobileItemDetailState extends State<MobileItemDetail> {
   final TextEditingController _reviewController = TextEditingController();
-  final List<String> _reviews = [];
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final CollectionReference _reviewsCollection =
+      FirebaseFirestore.instance.collection('mobileReviews');
 
-  void _addReview() {
-    if (_reviewController.text.isNotEmpty) {
-      setState(() {
-        _reviews.add(_reviewController.text);
-        _reviewController.clear();
-      });
+  Future<void> _addReview() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('No internet connection. Review cannot be added.')),
+      );
+      return;
     }
+
+    if (_reviewController.text.isNotEmpty) {
+      final user = _auth.currentUser;
+
+      if (user == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('You must be logged in to add a review.')),
+        );
+        return;
+      }
+
+      try {
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+
+        if (userDoc.exists) {
+          final username = userDoc.data()?['username'] ?? 'Anonymous';
+
+          await _reviewsCollection.add({
+            'mobile': widget.model,
+            'userId': user.uid,
+            'username': username,
+            'review': _reviewController.text,
+          });
+
+          setState(() {
+            _reviewController.clear();
+          });
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Review added successfully!')),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('User data not found.')),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to add review. Error: $e')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a review.')),
+      );
+    }
+  }
+
+  Stream<QuerySnapshot> _getReviewsStream() {
+    return _reviewsCollection
+        .where('mobile', isEqualTo: widget.model)
+        .snapshots();
   }
 
   @override
@@ -77,16 +140,12 @@ class _MobileItemDetailState extends State<MobileItemDetail> {
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              Text(
-                "Brand: ${widget.brand}",
-                style: const TextStyle(fontSize: 18),
-              ),
+              Text("Brand: ${widget.brand}",
+                  style: const TextStyle(fontSize: 18)),
               const SizedBox(height: 10),
-              Text(
-                "Price: ${widget.price}",
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+              Text("Price: ${widget.price}",
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 30),
               const Text(
                 'Customer Reviews',
@@ -121,18 +180,57 @@ class _MobileItemDetailState extends State<MobileItemDetail> {
                     const SizedBox(height: 10),
                     SizedBox(
                       height: 200,
-                      child: _reviews.isNotEmpty
-                          ? ListView.builder(
-                              itemCount: _reviews.length,
-                              itemBuilder: (context, index) => ListTile(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 2.0),
-                                leading: const Icon(Icons.chat_bubble_outline,
-                                    color: Colors.teal),
-                                title: Text(_reviews[index]),
-                              ),
-                            )
-                          : const Center(child: Text("No reviews yet")),
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: _getReviewsStream(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return const Center(
+                                child: Text("An error occurred"));
+                          }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                          if (!snapshot.hasData ||
+                              snapshot.data!.docs.isEmpty) {
+                            return const Center(child: Text("No reviews yet"));
+                          }
+                          final reviews = snapshot.data!.docs;
+                          return ListView.builder(
+                            itemCount: reviews.length,
+                            itemBuilder: (context, index) {
+                              final reviewData = reviews[index];
+                              final username =
+                                  reviewData['username'] ?? 'Anonymous';
+                              final review = reviewData['review'];
+                              final avatarLetter =
+                                  username.isNotEmpty ? username[0] : 'A';
+
+                              return ListTile(
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.teal,
+                                  child: Text(
+                                    avatarLetter.toUpperCase(),
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                  radius: 15,
+                                ),
+                                title: Text(
+                                  review,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                subtitle: Text(
+                                  '~ $username',
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Color.fromARGB(255, 16, 16, 16)),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -152,15 +250,18 @@ class _MobileItemDetailState extends State<MobileItemDetail> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.teal, width: 2.0),
+                    borderSide:
+                        const BorderSide(color: Colors.teal, width: 2.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.teal, width: 2.5),
+                    borderSide:
+                        const BorderSide(color: Colors.teal, width: 2.5),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.teal, width: 2.0),
+                    borderSide:
+                        const BorderSide(color: Colors.teal, width: 2.0),
                   ),
                 ),
               ),
@@ -173,7 +274,7 @@ class _MobileItemDetailState extends State<MobileItemDetail> {
                     backgroundColor: const Color.fromARGB(255, 50, 127, 119),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      side: BorderSide(color: Colors.teal),
+                      side: const BorderSide(color: Colors.teal),
                     ),
                     padding: const EdgeInsets.all(16),
                   ),

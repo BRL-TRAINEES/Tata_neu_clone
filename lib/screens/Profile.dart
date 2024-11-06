@@ -1,160 +1,259 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:tataneu_clone/screens/login_screen.dart';
 
-final usernameProvider = StateProvider<String>((ref) => '');
-final emailProvider = StateProvider<String>((ref) => '');
-final profileImageProvider = StateProvider<File?>((ref) => null);
+class UserAccountScreen extends StatefulWidget {
+  @override
+  _UserAccountScreenState createState() => _UserAccountScreenState();
+}
 
-final usernameControllerProvider = Provider((ref) {
-  final controller = TextEditingController();
-  ref.onDispose(controller.dispose);
-  return controller;
-});
+class _UserAccountScreenState extends State<UserAccountScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final ImagePicker _picker = ImagePicker();
 
-final emailControllerProvider = Provider((ref) {
-  final controller = TextEditingController();
-  ref.onDispose(controller.dispose);
-  return controller;
-});
+  File? _profileImage;
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
-class ProfilePage extends ConsumerWidget {
-  const ProfilePage({super.key});
-
+  User? _user;
+  bool _isLoading = false;
+  bool _isNewUser = false;
+  bool _isEditing = false;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final username = ref.watch(usernameProvider);
-    final email = ref.watch(emailProvider);
-    final profileImage = ref.watch(profileImageProvider);
+  void initState() {
+    super.initState();
+    _user = _auth.currentUser;
+    if (_user != null) {
+      _getUserProfileData();
+    } else {
+      setState(() {
+        _usernameController.text = 'Guest';
+        _emailController.text = 'guest@example.com';
+      });
+    }
+  }
 
-    final usernameController = ref.watch(usernameControllerProvider);
-    final emailController = ref.watch(emailControllerProvider);
-
-    usernameController.text = username;
-    emailController.text = email;
-
-
-    Future<void> pickImage() async {
-
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        ref.read(profileImageProvider.notifier).state = File(image.path);
+  Future<void> _getUserProfileData() async {
+    try {
+      DocumentSnapshot docSnapshot =
+          await _firestore.collection('users').doc(_user!.uid).get();
+      if (docSnapshot.exists) {
+        var data = docSnapshot.data() as Map<String, dynamic>;
+        setState(() {
+          _usernameController.text =
+              data['username'] ?? _user?.displayName ?? 'Guest';
+          _emailController.text =
+              data['email'] ?? _user?.email ?? 'guest@example.com';
+        });
+      } else {
+        setState(() {
+          _isNewUser = true;
+          _usernameController.text = 'Guest';
+          _emailController.text = 'guest@example.com';
+        });
       }
+    } catch (e) {
+      setState(() {
+        _isNewUser = true;
+      });
+      print('Error getting user data: $e');
+    }
+  }
+
+  Future<void> _updateProfile() async {
+    if (_user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('You need to be logged in to update your profile')),
+      );
+      return;
     }
 
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      String? imageUrl;
+
+      if (_profileImage != null) {
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('profile_pictures/${_user!.uid}');
+        await storageRef.putFile(_profileImage!);
+        imageUrl = await storageRef.getDownloadURL();
+      }
+
+      await _firestore.collection('users').doc(_user!.uid).set({
+        'username': _usernameController.text,
+        'email': _emailController.text,
+        'profile_image': imageUrl,
+      }, SetOptions(merge: true));
+
+      await _user!.updateDisplayName(_usernameController.text);
+      await _user!.updateEmail(_emailController.text);
+      await _user!.reload();
+      _user = _auth.currentUser;
+
+      setState(() {
+        _isLoading = false;
+        _isEditing = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profile updated successfully')));
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error: $e')));
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path);
+      });
+    }
+  }
+
+  Future<void> _logout() async {
+    await _auth.signOut();
+    setState(() {
+      _user = null;
+    });
+    Navigator.pushReplacementNamed(context, '/login');
+  }
+
+  void _goToLoginScreen() {
+    Navigator.pushNamed(context, '/login');
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        title: Text('Profile', style: TextStyle(color: Color(0xFFFFD700))),
-        backgroundColor: Color(0xFF001F3F),
-        elevation: 0,
-        centerTitle: true,
+        title: const Text('User Account'),
+        backgroundColor: const Color(0xFF003366),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 20),
-              GestureDetector(
-
-                onTap: pickImage,
-
-                child: CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Color(0xFF001F3F).withOpacity(0.8),
-                  backgroundImage: profileImage != null
-                      ? FileImage(profileImage)
-                      : AssetImage('assets/default_avatar.png')
-                          as ImageProvider,
-                  child: profileImage == null
-                      ? Icon(
-                          Icons.camera_alt,
-                          size: 40,
-                          color: Color(0xFFFFD700),
-                        )
-                      : null,
-                ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Edit Profile Picture',
-                style: TextStyle(
-                  color: Color(0xFF001F3F),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(height: 30),
-              _buildTextField(
-                label: 'Username',
-                controller: usernameController,
-                onChanged: (value) =>
-                    ref.read(usernameProvider.notifier).state = value,
-              ),
-              SizedBox(height: 20),
-              _buildTextField(
-                label: 'Email',
-                controller: emailController,
-                onChanged: (value) =>
-                    ref.read(emailProvider.notifier).state = value,
-              ),
-              SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: () {
-                  final usernameValue = ref.read(usernameProvider);
-                  final emailValue = ref.read(emailProvider);
-                  print('Username: $usernameValue, Email: $emailValue');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 18, 60, 66),
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 5,
-                ),
-                child: Text(
-                  'Save Profile',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 248, 224, 12)),
+              Center(
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: _pickImage,
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundColor: Colors.grey[300],
+                        backgroundImage: _profileImage != null
+                            ? FileImage(_profileImage!)
+                            : NetworkImage(_user?.photoURL ??
+                                    'https://www.w3schools.com/howto/img_avatar.png')
+                                as ImageProvider,
+                        child: _profileImage == null
+                            ? Icon(
+                                Icons.camera_alt,
+                                size: 40,
+                                color: Colors.white,
+                              )
+                            : null,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: _usernameController,
+                      decoration: InputDecoration(
+                        labelText: 'Username',
+                        border: OutlineInputBorder(),
+                      ),
+                      enabled: _isEditing,
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          border: OutlineInputBorder(),
+                        ),
+                        enabled: _isEditing),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _isEditing ? _updateProfile : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF003366),
+                        padding: const EdgeInsets.all(15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text('Save Profile'),
+                    ),
+                    const SizedBox(height: 30),
+                    _user != null
+                        ? Column(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _isEditing =
+                                        !_isEditing; // Toggle edit mode
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue,
+                                  padding: const EdgeInsets.all(15),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: Text(_isEditing
+                                    ? 'Cancel Edit'
+                                    : 'Edit Profile'),
+                              ),
+                              ElevatedButton(
+                                onPressed: _logout,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  padding: const EdgeInsets.all(15),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: const Text('Log Out'),
+                              ),
+                            ],
+                          )
+                        : ElevatedButton(
+                            onPressed: _goToLoginScreen,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              padding: const EdgeInsets.all(15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text('Log In'),
+                          ),
+                  ],
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required String label,
-    required TextEditingController controller,
-    required Function(String) onChanged,
-  }) {
-    return TextField(
-      controller: controller,
-      onChanged: onChanged,
-      style: TextStyle(color: Color(0xFF001F3F)),
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(color: Color(0xFF001F3F)),
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide:
-              BorderSide(color: Color(0xFF001F3F).withOpacity(0.3), width: 1),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Color(0xFF001F3F), width: 1.5),
         ),
       ),
     );
