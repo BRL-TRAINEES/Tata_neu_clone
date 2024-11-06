@@ -123,7 +123,8 @@ class Homescreen extends ConsumerWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                        MaterialPageRoute(
+                            builder: (context) => UserAccountScreen()),
                       );
                     },
                     child: SvgPicture.asset("assets/svg/account.svg"),
@@ -1035,7 +1036,7 @@ FutureBuilder<Map<String, dynamic>>(
             case 4:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfilePage()),
+                MaterialPageRoute(builder: (context) => UserAccountScreen()),
               );
               break;
           }

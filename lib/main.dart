@@ -6,26 +6,16 @@ import 'screens/homescreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/login_screen.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-
-  try {
-    await Firebase.initializeApp();
-    await Hive.initFlutter();
-    await Hive.openBox<List<Map<String, String>>>('reviewsBox');
-    await ChatProvider.initHive(); 
-  } catch (e) {
-    print('Error during initialization: $e');
-  }
-  
-  // var reviewsBox = await Hive.openBox<List<Map<String, String>>>('reviewsBox');
-
-  // Clear existing data from the box
-  // await reviewsBox.clear();
-
+  await Firebase.initializeApp();
+  // FirebaseFirestore.instance.settings = const Settings(
+  //   //allowed to see/write data without net and on connection automatic get refresh with new data
+  //   persistenceEnabled: true,
+  // );
+  await FirebaseFirestore.instance.disableNetwork();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -36,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(), 
+      home: const SplashScreen(),
     );
   }
 }
@@ -50,8 +40,8 @@ class SplashScreen extends ConsumerWidget {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) {
           return FirebaseAuth.instance.currentUser != null
-              ? const Homescreen() 
-              : const SigninScreen(); 
+              ? const Homescreen()
+              : const SigninScreen();
         }),
       );
     });
@@ -59,7 +49,7 @@ class SplashScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Image.asset("assets/images/tata neu logo.jpeg"), 
+        child: Image.asset("assets/images/tata neu logo.jpeg"),
       ),
     );
   }

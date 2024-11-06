@@ -4,9 +4,7 @@ import 'package:tataneu_clone/provider.dart';
 import 'package:tataneu_clone/screens/login_screen.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
-
   const SignupScreen({super.key});
-
 
   @override
   ConsumerState<SignupScreen> createState() => _SignupScreenState();
@@ -50,9 +48,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF5B2B91), 
+              Color(0xFF5B2B91),
               Color(0xFFC22B8E),
-              Color(0xFFF66C22), 
+              Color(0xFFF66C22),
             ],
           ),
         ),
@@ -64,7 +62,6 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  
                   Container(
                     margin: const EdgeInsets.only(left: 50),
                     decoration: BoxDecoration(
@@ -119,7 +116,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   ),
                   const SizedBox(height: 16.0),
 
-                  // Password field 
+                  // Password field
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
@@ -154,25 +151,25 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   ),
                   const SizedBox(height: 20.0),
 
-                  // Sign Up button 
+                  // Sign Up button
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.3, 
+                    width: MediaQuery.of(context).size.width * 0.3,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          Color(0xFF5B2B91), 
+                          Color(0xFF5B2B91),
                           Color(0xFFC22B8E),
-                          Color(0xFFF66C22), 
+                          Color(0xFFF66C22),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent, 
-                        shadowColor: Colors.transparent, 
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
                       ),
                       onPressed: _signup,
                       child: const Text('Sign Up'),

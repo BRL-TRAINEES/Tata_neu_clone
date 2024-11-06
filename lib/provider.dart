@@ -15,8 +15,9 @@ final navigationProvider =
 
 // Navigation state
 class NavigationState {
-  final bool isLogoVisible; // This can be useful if you want to show/hide a logo
-  final int pageIndex; 
+  final bool
+      isLogoVisible; // This can be useful if you want to show/hide a logo
+  final int pageIndex; // Currently selected index for bottom navigation
 
   NavigationState({
     required this.isLogoVisible,
@@ -29,7 +30,6 @@ class NavigationNotifier extends StateNotifier<NavigationState> {
   NavigationNotifier()
       : super(NavigationState(isLogoVisible: true, pageIndex: 0)) {
     _startLogoTimer();
-    
   }
 
   Timer? _logoTimer;
