@@ -22,21 +22,25 @@ import 'package:tataneu_clone/screens/ApplianceScreen.dart';
 import 'package:tataneu_clone/screens/jwelleryScreen.dart';
 import 'package:tataneu_clone/screens/watchesScreen.dart';
 import 'package:tataneu_clone/screens/chat_screen.dart';
+import 'package:geocoding/geocoding.dart';
 
 class Homescreen extends ConsumerWidget {
   const Homescreen({super.key});
-  Future<void> _getCurrentLocation(BuildContext context) async {
+
+  Future<Map<String, dynamic>> _getCurrentLocation(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
 
+    // Check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Location services are disabled.')),
       );
-      return;
+      return {};
     }
 
+    // Check location permission
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -44,7 +48,7 @@ class Homescreen extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Location permissions are denied')),
         );
-        return;
+        return {};
       }
     }
 
@@ -52,16 +56,38 @@ class Homescreen extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Location permissions are permanently denied')),
       );
-      return;
+      return {};
     }
 
-    // Retrieve and display location
+    // Retrieve current location
     Position position = await Geolocator.getCurrentPosition();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(
-              'Current location: ${position.latitude}, ${position.longitude}')),
-    );
+
+    try {
+      // Use geocoding to get the place name and pincode from coordinates
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks.first;
+        String locationName = place.locality ?? 'Unknown';
+        String pincode = place.postalCode ?? 'No pincode available';
+
+        return {
+          'latitude': position.latitude,
+          'longitude': position.longitude,
+          'locationName': locationName,
+          'pincode': pincode,
+        };
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to retrieve address: $e')),
+      );
+    }
+
+    return {};
   }
 
   @override
@@ -159,29 +185,43 @@ class Homescreen extends ConsumerWidget {
             ),
           ),
 
-          const SizedBox(height: 10),
-          FutureBuilder(
-            future: Geolocator.getCurrentPosition(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return ElevatedButton(
-                  onPressed: () => _getCurrentLocation(context),
-                  child: const Text('Get Current Location'),
-                );
-              } else {
-                final position = snapshot.data;
-                return Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Text(
-                        'Current location: ${position?.latitude}, ${position?.longitude}'),
-                  ],
-                );
-              }
-            },
+          
+         const SizedBox(height: 5),
+FutureBuilder<Map<String, dynamic>>(
+  future: _getCurrentLocation(context),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const CircularProgressIndicator();
+    } else if (snapshot.hasError || (snapshot.data?.isEmpty ?? true)) {
+      return ElevatedButton(
+        onPressed: () => _getCurrentLocation(context),
+        child: const Text('Retry Getting Location'),
+      );
+    } else {
+      final data = snapshot.data!;
+      return Column(
+        children: [
+          Row(
+            children: [
+              Icon(Icons.location_on, color: Colors.blue), 
+              const SizedBox(width: 5), 
+              Text(
+                '${data['locationName']}: ',
+                style: TextStyle(color: Colors.black),
+              ),
+              Text(
+                data['pincode'],
+                style: TextStyle(color: const Color.fromARGB(255, 12, 123, 213)),
+              ),
+            ],
           ),
+          const SizedBox(height: 5),
+        ],
+      );
+    }
+  },
+),
+
 
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -969,12 +1009,12 @@ class Homescreen extends ConsumerWidget {
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           switch (index) {
-            case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Homescreen()),
-              );
-              break;
+            // case 0:
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => Homescreen()),
+            //   );
+            //   break;
             case 1:
               Navigator.push(
                 context,

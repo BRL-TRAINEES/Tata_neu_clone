@@ -24,13 +24,13 @@ class Categories extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Horizontal list of buttons
+            
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: buttonNames.map((name) {
                   return Padding(
-                    padding: const EdgeInsets.only(right: 8.0), // Space between buttons
+                    padding: const EdgeInsets.only(right: 8.0), 
                     child: ElevatedButton(
                       onPressed: () {
                         // Add functionality for each button here
@@ -41,21 +41,21 @@ class Categories extends StatelessWidget {
                 }).toList(),
               ),
             ),
-            const SizedBox(height: 20.0), // Space between buttons and "Daily" text
+            const SizedBox(height: 20.0), 
 
-            // "Daily" text
+            
             const Text(
               'Daily',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 10.0), // Space between "Daily" text and images
+            const SizedBox(height: 10.0), 
 
-            // Row of three images with text below each
+            // Row of three images
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // First image and text
+                
                 Column(
                   children: [
                     ClipOval(
@@ -66,12 +66,11 @@ class Categories extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(height: 8.0), // Space between image and text
+                    const SizedBox(height: 8.0),
                     const Text('Grocery'),
                   ],
                 ),
-                const SizedBox(width: 20), // Space between images
-                // Second image and text
+                const SizedBox(width: 20), 
                 Column(
                   children: [
                     ClipOval(
@@ -82,7 +81,7 @@ class Categories extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(height: 8.0), // Space between image and text
+                    const SizedBox(height: 8.0), 
                     Column(
                       children: const [
                         Text('Instant Grocery'),
@@ -90,8 +89,7 @@ class Categories extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(width: 20), // Space between images
-                // Third image and text
+                const SizedBox(width: 20), 
                 Column(
                   children: [
                     ClipOval(
@@ -102,7 +100,7 @@ class Categories extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(height: 8.0), // Space between image and text
+                    const SizedBox(height: 8.0), 
                     const Text('Medicines'),
                   ],
                 ),
@@ -110,64 +108,62 @@ class Categories extends StatelessWidget {
             ),
             Divider(),
 
-            const SizedBox(height: 20.0), // Space between "Daily" images and "Electronics" text
+            const SizedBox(height: 20.0), 
 
-            // "Electronics" text
+            
             const Text(
               'Electronics',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 20.0), // Space between "Electronics" text and images
+            const SizedBox(height: 20.0), 
 
-            // Row of four images with text below each
+            // Row of four images 
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // First image and text for Electronics
+               
                 Column(
                   children: [
                     ClipOval(
                       child: Image.asset(
-                        'assets/images/mobile.png', // Update with correct image path
+                        'assets/images/mobile.png', 
                         width: 70,
                         height: 70,
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(height: 8.0), // Space between image and text
+                    const SizedBox(height: 8.0), 
                     const Text('Mobile'),
                   ],
                 ),
-                const SizedBox(width: 20), // Space between images
-                // Second image and text for Electronics
+                const SizedBox(width: 20),
                 Column(
                   children: [
                     ClipOval(
                       child: Image.asset(
-                        'assets/images/headphone.jpeg', // Update with correct image path
+                        'assets/images/headphone.jpeg', 
                         width: 70,
                         height: 70,
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(height: 8.0), // Space between image and text
+                    const SizedBox(height: 8.0), 
                     const Text('Gadgets'),
                   ],
                 ),
-                const SizedBox(width: 20), // Space between images
-                // Third image and text for Electronics
+                const SizedBox(width: 20), 
                 Column(
                   children: [
                     ClipOval(
                       child: Image.asset(
-                        'assets/images/appliances.jpg', // Update with correct image path
+                        'assets/images/appliances.jpg', 
                         width: 70,
                         height: 70,
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(height: 8.0), // Space between image and text
+                    const SizedBox(height: 8.0),
                     const Text('TV & Appliances'),
                   ],
                 ),
@@ -243,15 +239,15 @@ class Categories extends StatelessWidget {
             const SizedBox(height: 20),
             Divider(),
 
-            // "Cards & Loans" text
+           
             const Text(
               "Cards & Loans",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 16), // Space between text and images
+            const SizedBox(height: 16), 
 
-            // Row of four images with text below each
+            // Row of four images
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -302,15 +298,15 @@ class Categories extends StatelessWidget {
             const SizedBox(height: 20),
             Divider(),
 
-            // "Travel" text
+            
             const Text(
               "Travel",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 16), // Space between text and images
+            const SizedBox(height: 16), 
 
-            // Row of two images with text below each
+            // Row of two images 
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
